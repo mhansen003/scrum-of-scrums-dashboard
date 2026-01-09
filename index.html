@@ -3,93 +3,366 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scrum of Scrums Dashboard | CMG Financial</title>
+  <title>Scrum of Scrums Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0a0f1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2234;
+      --accent-blue: #3b82f6;
+      --accent-teal: #14b8a6;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(255,255,255,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 60px 40px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(20, 184, 166, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent-teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 40px;
+    }
+
+    .report-tile {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 2.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .report-tile::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(20, 184, 166, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .report-tile:hover {
+      border-color: var(--accent-teal);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .report-tile:hover::before {
+      opacity: 1;
+    }
+
+    .report-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .report-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .report-meta {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .report-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .stat-box {
+      background: var(--bg-secondary);
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-number.blue { color: var(--accent-blue); }
+    .stat-number.teal { color: var(--accent-teal); }
+    .stat-number.amber { color: var(--accent-amber); }
+    .stat-number.rose { color: var(--accent-rose); }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .view-report {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent-teal);
+      font-weight: 600;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      transition: gap 0.3s ease;
+    }
+
+    .report-tile:hover .view-report {
+      gap: 0.75rem;
+    }
+
+    .arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .report-tile:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .reports-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .report-tile {
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .report-tile:nth-child(1) { animation-delay: 0.1s; }
+    .report-tile:nth-child(2) { animation-delay: 0.2s; }
+    .report-tile:nth-child(3) { animation-delay: 0.3s; }
+    .report-tile:nth-child(4) { animation-delay: 0.4s; }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="header-content">
-      <h1>Scrum of Scrums Dashboard</h1>
-      <p class="subtitle">Weekly team updates and performance tracking</p>
-    </div>
-  </header>
-
   <div class="container">
-    <!-- Calendar -->
-    <div class="calendar-container">
-      <div id="calendar"></div>
-    </div>
+    <header>
+      <div class="label">CMG Financial</div>
+      <h1>Scrum of Scrums</h1>
+      <p class="subtitle">Weekly Team Updates & Progress Reports</p>
+    </header>
 
-    <!-- Overview Stats -->
-    <div class="card" style="margin-bottom: 3rem;">
-      <h2>Overview - All Teams</h2>
-      <div class="stat-grid">
-        <div class="stat">
-          <div class="stat-number blue" id="totalTeams">9</div>
-          <div class="stat-label">Active Teams</div>
+    <div class="reports-grid">
+      <!-- Jan 9, 2026 Report -->
+      <a href="./weeks/2026-01-09.html" class="report-tile">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">January 9, 2026</h2>
+        <p class="report-meta">Latest Report • 9 Teams</p>
+        <div class="report-stats">
+          <div class="stat-box">
+            <div class="stat-number blue">68</div>
+            <div class="stat-label">Accomplishments</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number teal">87</div>
+            <div class="stat-label">Goals</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number amber">14</div>
+            <div class="stat-label">Blockers</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number rose">6</div>
+            <div class="stat-label">Risks</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-number blue" id="totalAccomplishments">—</div>
-          <div class="stat-label">Total Accomplishments</div>
+        <div class="view-report">
+          View Full Report <span class="arrow">→</span>
         </div>
-        <div class="stat">
-          <div class="stat-number amber" id="totalBlockers">—</div>
-          <div class="stat-label">Active Blockers</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number rose" id="totalRisks">—</div>
-          <div class="stat-label">Critical Risks</div>
-        </div>
-      </div>
-    </div>
+      </a>
 
-    <!-- Charts -->
-    <div class="dashboard-grid">
-      <!-- Accomplishments Trend -->
-      <div class="card">
-        <h2>Accomplishments Trend</h2>
-        <div class="chart-container">
-          <canvas id="accomplishmentsChart"></canvas>
+      <!-- Dec 29, 2025 Report -->
+      <a href="./weeks/2025-12-29.html" class="report-tile">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">December 29, 2025</h2>
+        <p class="report-meta">9 Teams</p>
+        <div class="report-stats">
+          <div class="stat-box">
+            <div class="stat-number blue">41</div>
+            <div class="stat-label">Accomplishments</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number teal">63</div>
+            <div class="stat-label">Goals</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number amber">8</div>
+            <div class="stat-label">Blockers</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number rose">5</div>
+            <div class="stat-label">Risks</div>
+          </div>
         </div>
-      </div>
-
-      <!-- Blockers & Risks Trend -->
-      <div class="card">
-        <h2>Blockers & Risks Over Time</h2>
-        <div class="chart-container">
-          <canvas id="blockersRisksChart"></canvas>
+        <div class="view-report">
+          View Full Report <span class="arrow">→</span>
         </div>
-      </div>
+      </a>
 
-      <!-- Team Activity -->
-      <div class="card">
-        <h2>Team Activity (Latest Week)</h2>
-        <div class="chart-container">
-          <canvas id="teamActivityChart"></canvas>
+      <!-- Dec 8, 2025 Report -->
+      <a href="./weeks/2025-12-08.html" class="report-tile">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">December 8, 2025</h2>
+        <p class="report-meta">9 Teams</p>
+        <div class="report-stats">
+          <div class="stat-box">
+            <div class="stat-number blue">90</div>
+            <div class="stat-label">Accomplishments</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number teal">65</div>
+            <div class="stat-label">Goals</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number amber">10</div>
+            <div class="stat-label">Blockers</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number rose">5</div>
+            <div class="stat-label">Risks</div>
+          </div>
         </div>
-      </div>
-
-      <!-- Work Distribution -->
-      <div class="card">
-        <h2>Work Distribution (Latest Week)</h2>
-        <div class="chart-container">
-          <canvas id="workDistributionChart"></canvas>
+        <div class="view-report">
+          View Full Report <span class="arrow">→</span>
         </div>
-      </div>
-    </div>
+      </a>
 
-    <!-- Team List -->
-    <div class="card">
-      <h2>Team Performance - Latest Week</h2>
-      <div class="team-list" id="teamList">
-        <div class="loading">Loading team data</div>
-      </div>
+      <!-- Nov 24, 2025 Report -->
+      <a href="./weeks/2025-11-24.html" class="report-tile">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">November 24, 2025</h2>
+        <p class="report-meta">9 Teams</p>
+        <div class="report-stats">
+          <div class="stat-box">
+            <div class="stat-number blue">90</div>
+            <div class="stat-label">Accomplishments</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number teal">79</div>
+            <div class="stat-label">Goals</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number amber">7</div>
+            <div class="stat-label">Blockers</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number rose">5</div>
+            <div class="stat-label">Risks</div>
+          </div>
+        </div>
+        <div class="view-report">
+          View Full Report <span class="arrow">→</span>
+        </div>
+      </a>
     </div>
   </div>
-
-  <script src="./assets/js/calendar.js"></script>
-  <script src="./assets/js/dashboard.js"></script>
 </body>
 </html>
