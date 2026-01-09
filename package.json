@@ -1,0 +1,14 @@
+{
+  "name": "scrum-of-scrums-dashboard",
+  "version": "1.0.0",
+  "description": "Weekly Scrum of Scrums tracking dashboard with trending analytics",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": ["scrum", "dashboard", "analytics", "charts"],
+  "author": "CMG Financial",
+  "license": "ISC"
+}

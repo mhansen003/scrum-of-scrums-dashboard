@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scrum of Scrums Dashboard | CMG Financial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>Scrum of Scrums Dashboard</h1>
+      <p class="subtitle">Weekly team updates and performance tracking</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Week Selector -->
+    <div class="week-selector" id="weekSelector">
+      <a href="./" class="week-btn active">Dashboard</a>
+      <a href="./weeks/2026-01-09.html" class="week-btn">Week of Jan 9, 2026</a>
+      <a href="./weeks/2025-12-29.html" class="week-btn">Week of Dec 29, 2025</a>
+      <a href="./weeks/2025-12-08.html" class="week-btn">Week of Dec 8, 2025</a>
+      <a href="./weeks/2025-11-24.html" class="week-btn">Week of Nov 24, 2025</a>
+    </div>
+
+    <!-- Overview Stats -->
+    <div class="card" style="margin-bottom: 3rem;">
+      <h2>Overview - All Teams</h2>
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="stat-number blue" id="totalTeams">9</div>
+          <div class="stat-label">Active Teams</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number blue" id="totalAccomplishments">—</div>
+          <div class="stat-label">Total Accomplishments</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number amber" id="totalBlockers">—</div>
+          <div class="stat-label">Active Blockers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number rose" id="totalRisks">—</div>
+          <div class="stat-label">Critical Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="dashboard-grid">
+      <!-- Accomplishments Trend -->
+      <div class="card">
+        <h2>Accomplishments Trend</h2>
+        <div class="chart-container">
+          <canvas id="accomplishmentsChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Blockers & Risks Trend -->
+      <div class="card">
+        <h2>Blockers & Risks Over Time</h2>
+        <div class="chart-container">
+          <canvas id="blockersRisksChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Team Activity -->
+      <div class="card">
+        <h2>Team Activity (Latest Week)</h2>
+        <div class="chart-container">
+          <canvas id="teamActivityChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Work Distribution -->
+      <div class="card">
+        <h2>Work Distribution (Latest Week)</h2>
+        <div class="chart-container">
+          <canvas id="workDistributionChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team List -->
+    <div class="card">
+      <h2>Team Performance - Latest Week</h2>
+      <div class="team-list" id="teamList">
+        <div class="loading">Loading team data</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week of Jan 9, 2026 | Scrum of Scrums</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <style>
+    .team-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .team-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .team-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--accent-teal);
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .section {
+      background: var(--bg-secondary);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .item-list {
+      list-style: none;
+    }
+
+    .item-list li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .item-list li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent-teal);
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>Scrum of Scrums</h1>
+      <p class="subtitle">Week ending January 9, 2026</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Week Selector -->
+    <div class="week-selector">
+      <a href="../" class="week-btn">Dashboard</a>
+      <a href="./2026-01-09.html" class="week-btn active">Week of Jan 9, 2026</a>
+      <a href="./2025-12-29.html" class="week-btn">Week of Dec 29, 2025</a>
+      <a href="./2025-12-08.html" class="week-btn">Week of Dec 8, 2025</a>
+      <a href="./2025-11-24.html" class="week-btn">Week of Nov 24, 2025</a>
+    </div>
+
+    <!-- Salesforce Team -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Salesforce Team</h2>
+        <span style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">Jonathan Sandoval</span>
+      </div>
+
+      <div class="section-grid">
+        <div class="section">
+          <div class="section-title">Accomplishments Last Period</div>
+          <ul class="item-list">
+            <li>Ready for UAT: Add "Reason for Default" to the Collections and Loss Mitigation Disposition Codes - 89536</li>
+            <li>Escrow | Escrow Data Mapping Phase 1 - 84574</li>
+            <li>Third Party Authorizations - Data Mapping - 87735</li>
+            <li>Enhancement | FEMA workflow language change - 86885</li>
+            <li>UAT Pass: Disposition Error - BUG 91235</li>
+            <li>Add admin bypass to case and voicecall validation rules - 85200</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Goals This Period / Next Period</div>
+          <ul class="item-list">
+            <li>Enhancement | FEMA Related Fields Displayed on Timeline within Case - 89684</li>
+            <li>PAYMENT | Enhancement | Pay Now uses GetPaymentOptionsDetails to calculate Amount Due - 83056</li>
+            <li>Outlook Email Integration With Intelligent Loan/Customer Lookup - 89076</li>
+            <li>LoanServ Script | E-Bill Consent | Borrower Updates | APIBORRW - 55318</li>
+            <li>Display Created Date in Timeline Subject for Cases and Tasks on Loan - 91656</li>
+            <li>Critical: ODS Sync Dual Bugs - Performance + Data Sync Failures - BUG 92088</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Blockers and Work Arounds</div>
+          <p style="color: var(--text-muted); font-style: italic;">No blockers reported</p>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Critical Risks and Mitigations</div>
+          <p style="color: var(--text-muted); font-style: italic;">No critical risks reported</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add note about full detail pages -->
+    <div class="card" style="text-align: center; padding: 3rem;">
+      <h3 style="color: var(--accent-teal); margin-bottom: 1rem;">Full Team Details</h3>
+      <p style="color: var(--text-secondary);">
+        This is a sample week detail page showing the Salesforce Team. <br>
+        Full detail pages for all teams can be generated using the same template structure.
+      </p>
+      <a href="../" class="week-btn" style="margin-top: 2rem;">Return to Dashboard</a>
+    </div>
+  </div>
+</body>
+</html>

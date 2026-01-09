@@ -1,0 +1,77 @@
+{
+  "weekEnding": "2025-11-24",
+  "teams": [
+    {
+      "name": "Salesforce Team",
+      "lead": "Jonathan Sandoval",
+      "accomplishmentsCount": 9,
+      "goalsCount": 6,
+      "blockersCount": 2,
+      "risksCount": 2
+    },
+    {
+      "name": "Team Hema",
+      "lead": "Jonathan Sandoval",
+      "accomplishmentsCount": 20,
+      "goalsCount": 18,
+      "blockersCount": 1,
+      "risksCount": 1
+    },
+    {
+      "name": "Team Arches & Zion",
+      "lead": "Rafael Souza",
+      "accomplishmentsCount": 4,
+      "goalsCount": 6,
+      "blockersCount": 0,
+      "risksCount": 1
+    },
+    {
+      "name": "Team Badlands",
+      "lead": "Carolina Barreto",
+      "accomplishmentsCount": 7,
+      "goalsCount": 7,
+      "blockersCount": 1,
+      "risksCount": 0
+    },
+    {
+      "name": "Team Yosemite",
+      "lead": "Carolina Barreto",
+      "accomplishmentsCount": 12,
+      "goalsCount": 8,
+      "blockersCount": 0,
+      "risksCount": 0
+    },
+    {
+      "name": "CX Team",
+      "lead": "Isadora Barros Braz",
+      "accomplishmentsCount": 4,
+      "goalsCount": 8,
+      "blockersCount": 2,
+      "risksCount": 1
+    },
+    {
+      "name": "MX Team",
+      "lead": "Thais Tome",
+      "accomplishmentsCount": 2,
+      "goalsCount": 3,
+      "blockersCount": 0,
+      "risksCount": 1
+    },
+    {
+      "name": "Team Capybara - Servicing",
+      "lead": "Gabriel Lázaro",
+      "accomplishmentsCount": 11,
+      "goalsCount": 6,
+      "blockersCount": 1,
+      "risksCount": 0
+    },
+    {
+      "name": "Team Panda - Servicing",
+      "lead": "Gabriel Lázaro",
+      "accomplishmentsCount": 21,
+      "goalsCount": 12,
+      "blockersCount": 1,
+      "risksCount": 0
+    }
+  ]
+}
