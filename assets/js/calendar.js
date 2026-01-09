@@ -1,4 +1,4 @@
-// Calendar component for Scrum of Scrums Dashboard
+// Weekly Calendar component for Scrum of Scrums Dashboard
 const availableWeeks = [
   { date: '2025-11-24', label: 'Nov 24, 2025', url: './weeks/2025-11-24.html' },
   { date: '2025-12-08', label: 'Dec 8, 2025', url: './weeks/2025-12-08.html' },
@@ -9,25 +9,34 @@ const availableWeeks = [
 let currentMonth = new Date();
 let selectedWeek = null;
 
-// Get week ending date (Sunday)
+// Get week ending date (Sunday) for any date
 function getWeekEnding(date) {
   const d = new Date(date);
   const day = d.getDay();
   const diff = 7 - day; // Days until Sunday
   d.setDate(d.getDate() + diff);
-  return d.toISOString().split('T')[0];
+  return d;
 }
 
-// Check if a date has data available
-function hasDataForWeek(date) {
-  const weekEnding = getWeekEnding(date);
-  return availableWeeks.some(week => week.date === weekEnding);
+// Get week starting date (Monday) for any date
+function getWeekStart(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1 - day; // Days since Monday
+  d.setDate(d.getDate() + diff);
+  return d;
 }
 
-// Get week data
-function getWeekData(date) {
-  const weekEnding = getWeekEnding(date);
-  return availableWeeks.find(week => week.date === weekEnding);
+// Format date as YYYY-MM-DD
+function formatDate(date) {
+  return date.toISOString().split('T')[0];
+}
+
+// Format date range for display
+function formatDateRange(startDate, endDate) {
+  const start = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const end = endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return `${start} - ${end}`;
 }
 
 // Format month/year for display
@@ -35,14 +44,44 @@ function formatMonthYear(date) {
   return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 }
 
-// Get first day of month
-function getFirstDayOfMonth(date) {
-  return new Date(date.getFullYear(), date.getMonth(), 1);
+// Check if a week has data available
+function hasDataForWeek(weekEndingDate) {
+  const weekEndStr = formatDate(weekEndingDate);
+  return availableWeeks.some(week => week.date === weekEndStr);
 }
 
-// Get last day of month
-function getLastDayOfMonth(date) {
-  return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+// Get week data
+function getWeekData(weekEndingDate) {
+  const weekEndStr = formatDate(weekEndingDate);
+  return availableWeeks.find(week => week.date === weekEndStr);
+}
+
+// Get all weeks in a month
+function getWeeksInMonth(date) {
+  const weeks = [];
+  const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+  // Start from the Monday of the week containing the first day
+  let currentWeekStart = getWeekStart(firstDay);
+
+  // Continue until we've covered the entire month
+  while (currentWeekStart <= lastDay) {
+    const weekEnd = getWeekEnding(currentWeekStart);
+
+    // Only include weeks that have days in this month
+    if (currentWeekStart <= lastDay || weekEnd.getMonth() === date.getMonth()) {
+      weeks.push({
+        start: new Date(currentWeekStart),
+        end: new Date(weekEnd)
+      });
+    }
+
+    // Move to next week
+    currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+  }
+
+  return weeks;
 }
 
 // Render calendar
@@ -50,10 +89,7 @@ function renderCalendar() {
   const calendar = document.getElementById('calendar');
   if (!calendar) return;
 
-  const firstDay = getFirstDayOfMonth(currentMonth);
-  const lastDay = getLastDayOfMonth(currentMonth);
-  const startingDayOfWeek = firstDay.getDay(); // 0 = Sunday
-  const totalDays = lastDay.getDate();
+  const weeks = getWeeksInMonth(currentMonth);
 
   let html = `
     <div class="calendar-header">
@@ -69,46 +105,36 @@ function renderCalendar() {
         </svg>
       </button>
     </div>
-    <div class="calendar-weekdays">
-      <div class="weekday">Sun</div>
-      <div class="weekday">Mon</div>
-      <div class="weekday">Tue</div>
-      <div class="weekday">Wed</div>
-      <div class="weekday">Thu</div>
-      <div class="weekday">Fri</div>
-      <div class="weekday">Sat</div>
-    </div>
-    <div class="calendar-grid">
+    <div class="calendar-weeks">
   `;
 
-  // Empty cells for days before month starts
-  for (let i = 0; i < startingDayOfWeek; i++) {
-    html += '<div class="calendar-day empty"></div>';
-  }
-
-  // Days of the month
-  for (let day = 1; day <= totalDays; day++) {
-    const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
-    const dateStr = date.toISOString().split('T')[0];
-    const weekData = getWeekData(date);
+  // Render each week
+  weeks.forEach(week => {
+    const weekData = getWeekData(week.end);
     const hasData = weekData !== undefined;
-    const isToday = dateStr === new Date().toISOString().split('T')[0];
     const isSelected = selectedWeek && weekData && weekData.date === selectedWeek;
+    const dateRange = formatDateRange(week.start, week.end);
+    const weekEndingLabel = week.end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-    let classes = 'calendar-day';
+    let classes = 'calendar-week';
     if (hasData) classes += ' has-data';
-    if (isToday) classes += ' today';
     if (isSelected) classes += ' selected';
 
     const onclick = hasData ? `onclick="selectWeek('${weekData.date}')"` : '';
+    const title = hasData ? `Week ending ${weekEndingLabel}` : '';
 
     html += `
-      <div class="${classes}" ${onclick} ${hasData ? 'title="Week ending ' + weekData.label + '"' : ''}>
-        <span class="day-number">${day}</span>
-        ${hasData ? '<span class="data-indicator"></span>' : ''}
+      <div class="${classes}" ${onclick} ${title ? 'title="' + title + '"' : ''}>
+        <div class="week-label">
+          <span class="week-range">${dateRange}</span>
+        </div>
+        <div class="week-ending">
+          Week ending: <strong>${week.end.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</strong>
+        </div>
+        ${hasData ? '<div class="week-indicator">📊 Data Available</div>' : '<div class="week-placeholder">No data</div>'}
       </div>
     `;
-  }
+  });
 
   html += '</div>';
   calendar.innerHTML = html;
