@@ -40,6 +40,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
+      margin-bottom: 2rem;
     }
 
     .metric-box {
@@ -66,6 +67,101 @@
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
+    }
+
+    .details-section {
+      margin-top: 1.5rem;
+    }
+
+    .detail-category {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .detail-category summary {
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: background-color 0.2s ease;
+    }
+
+    .detail-category summary:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .detail-category summary::marker {
+      content: '';
+    }
+
+    .detail-category summary::before {
+      content: '▶';
+      font-size: 0.7rem;
+      transition: transform 0.2s ease;
+      display: inline-block;
+    }
+
+    .detail-category[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    .detail-category.accomplishments summary {
+      color: var(--accent-blue);
+      border-left: 4px solid var(--accent-blue);
+    }
+
+    .detail-category.goals summary {
+      color: var(--accent-teal);
+      border-left: 4px solid var(--accent-teal);
+    }
+
+    .detail-category.blockers summary {
+      color: var(--accent-amber);
+      border-left: 4px solid var(--accent-amber);
+    }
+
+    .detail-category.risks summary {
+      color: var(--accent-rose);
+      border-left: 4px solid var(--accent-rose);
+    }
+
+    .detail-list {
+      padding: 1rem 1.5rem 1.5rem 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .detail-list ul {
+      margin: 0;
+      padding-left: 1.5rem;
+      list-style-type: disc;
+    }
+
+    .detail-list li {
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .detail-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .detail-list h4 {
+      color: var(--accent-teal);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .detail-list h4:first-child {
+      margin-top: 0;
     }
 
     @media (max-width: 768px) {
@@ -113,6 +209,64 @@
           <div class="metric-label">Risks</div>
         </div>
       </div>
+
+      <div class="details-section">
+        <details class="detail-category accomplishments" open>
+          <summary>Accomplishments Last Period</summary>
+          <div class="detail-list">
+            <h4>Testing - Ready for QA / In QA:</h4>
+            <ul>
+              <li>Enhancement | FEMA Related Fields Displayed on Timeline within Case - 89684</li>
+              <li>PAYMENT | Enhancement | Pay Now uses GetPaymentOptionsDetails to calculate Amount Due - 83056</li>
+            </ul>
+
+            <h4>In Dev:</h4>
+            <ul>
+              <li>Outlook Email Integration With Intelligent Loan/Customer Lookup - 89076</li>
+              <li>LoanServ Script | E-Bill Consent | Borrower Updates | APIBORRW - 55318</li>
+              <li>Display Created Date in Timeline Subject for Cases and Tasks on Loan - 91656</li>
+              <li>AG | Display Related Tasks on Case with Stacked Open/Closed View in Aspen Grove Tab - 78791</li>
+              <li>Critical: ODS Sync Dual Bugs - Performance (Stale cutoffDate) + Data Sync Failures (Missing ExLookupId__c) - BUG 92088</li>
+              <li>Payment Management – Unified Manage Payment (Recurring & One-Time) -90180</li>
+            </ul>
+
+            <h4>Ready for UAT / UAT:</h4>
+            <ul>
+              <li>Add "Reason for Default" to the Collections and Loss Mitigation Disposition Codes - 89536</li>
+              <li>Escrow | Escrow Data Mapping Phase 1 - 84574</li>
+              <li>Third Party Authorizations - Data Mapping - 87735</li>
+              <li>Enhancement | FEMA workflow language change -86885</li>
+            </ul>
+
+            <h4>UAT Pass/Resolved:</h4>
+            <ul>
+              <li>Disposition Error - BUG 91235</li>
+              <li>Add admin bypass to case and voicecall validation rules - 85200</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category goals">
+          <summary>Goals This Period / Next Period</summary>
+          <div class="detail-list">
+            <h4>Ready for QA / In QA:</h4>
+            <ul>
+              <li>Enhancement | FEMA Related Fields Displayed on Timeline within Case - 89684</li>
+              <li>PAYMENT | Enhancement | Pay Now uses GetPaymentOptionsDetails to calculate Amount Due - 83056</li>
+            </ul>
+
+            <h4>In Dev:</h4>
+            <ul>
+              <li>Outlook Email Integration With Intelligent Loan/Customer Lookup - 89076</li>
+              <li>LoanServ Script | E-Bill Consent | Borrower Updates | APIBORRW - 55318</li>
+              <li>Display Created Date in Timeline Subject for Cases and Tasks on Loan - 91656</li>
+              <li>AG | Display Related Tasks on Case with Stacked Open/Closed View in Aspen Grove Tab - 78791</li>
+              <li>Critical: ODS Sync Dual Bugs - Performance (Stale cutoffDate) + Data Sync Failures (Missing ExLookupId__c) - BUG 92088</li>
+              <li>Payment Management – Unified Manage Payment (Recurring & One-Time) -90180</li>
+            </ul>
+          </div>
+        </details>
+      </div>
     </div>
 
     <!-- Docs Team -->
@@ -131,13 +285,129 @@
           <div class="metric-label">Goals</div>
         </div>
         <div class="metric-box">
-          <div class="metric-number amber">1</div>
+          <div class="metric-number amber">0</div>
           <div class="metric-label">Blockers</div>
         </div>
         <div class="metric-box">
           <div class="metric-number rose">1</div>
           <div class="metric-label">Risks</div>
         </div>
+      </div>
+
+      <div class="details-section">
+        <details class="detail-category accomplishments">
+          <summary>Accomplishments Last Period</summary>
+          <div class="detail-list">
+            <h4>Testing QA:</h4>
+            <ul>
+              <li>BoB - [FE] - Single Flow Path - Landing Page / UI Revisions - UI Enhancements</li>
+              <li>BoB - [BE] - Single Flow Path - All API Endpoint Security for Back-End</li>
+              <li>Docs AI Classification | Max File Size (Gemini) Issue</li>
+              <li>Docs | UI | Pull only non-trashed Documents</li>
+              <li>Angular Upgrade | code cleanup</li>
+              <li>Clear Docs [BE] | Borrower Viewable Documents to align with CX Home Portal</li>
+            </ul>
+
+            <h4>Code Review:</h4>
+            <ul>
+              <li>BoB - [BE] - Single Flow Path - Bundle Dropdown Features</li>
+              <li>DOCS | UI | Enable Sort/Rearrange Action in Split Document Process</li>
+              <li>Clear Docs | File Processing | Not all documents Convert Word, Excel, HTML Docs to PDF Files so cannot Preview</li>
+            </ul>
+
+            <h4>In Dev:</h4>
+            <ul>
+              <li>Prod Cleanup Duplicated Documents</li>
+              <li>BoB - [BE] EPS API - Bundle Stack Order document details for a Loan File By BundleID andFiledataID</li>
+              <li>Angular Upgrade | PrimeNG v18</li>
+            </ul>
+
+            <h4>Ready For Dev:</h4>
+            <ul>
+              <li>BoB - [FE] - Bundle Management Single Flow Path - BytePro Bundle API Integration (25.2 Release Effort) Mapping</li>
+              <li>DOCS | UI | Sort/Rearrange Updates - User Request</li>
+              <li>Angular Upgrade | Performance Unit Testing Post-Upgrade</li>
+              <li>DOCS| Sending Doc Requests - Team Email Address Selection Instead of Individual(Requestor)</li>
+              <li>BoB - [BE] Bundle Management Single Flow Path - BytePro Bundle API Integration (25.2 Release Effort) Item #1</li>
+              <li>BoB - [BE] Bundle Management Single Flow Path - BytePro Bundle API Integration (25.2 Release Effort) Item #2</li>
+            </ul>
+
+            <h4>Owner Acceptance:</h4>
+            <ul>
+              <li>Angular Upgrade | Execution Packages/Changes</li>
+              <li>Angular Upgrade | Check Compatibility of Third-Party Libraries</li>
+              <li>Angular Upgrade | Analyze and Angular Version and Dependencies</li>
+              <li>Clear Docs iFrame in CLEAR | NMLS Pipeline = Loan Level Document Access and Permissions – Copy</li>
+              <li>DOCS | Review UI to Accommodate for Mobile Device View - Currently Not Able to View Documents</li>
+              <li>DOCS | Remove unused stored procedures</li>
+              <li>AI Doc Classification - Original Document Link - Disable If Document is Copied from Another Loan</li>
+              <li>Docs | API | Return recycle bin items separately</li>
+              <li>Docs | API | Include Classified Documents when Reporting Document Requests</li>
+              <li>Angular Upgrade | Version 18</li>
+              <li>Docs | API | External interface for Doc Reminders</li>
+              <li>DOCS | Bank CMG Copy Documents - New Final Doc Identifier</li>
+              <li>Docs Migration | Test Loan Prep</li>
+              <li>Bank CMG | Migrate old loans missing in Docs and sync documents from Byte</li>
+              <li>Clear - When I login as a PA or LO profile I can drag and drop files into the restricted Loans</li>
+              <li>DOCS UI - When I add more than one tag and select Filter by, it becomes transparent and I can't select any options</li>
+              <li>EPS API | Clear Docs iFrame in CLEAR | NMLS Pipeline = Loan Level Document AccessandPermissions</li>
+              <li>Docs | API | Return info about user token</li>
+            </ul>
+
+            <h4>Closed:</h4>
+            <ul>
+              <li>User Story 90297: DOCS | Borrower Portal Docs Needs Review Status - Enable Send to LOS Action</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category goals">
+          <summary>Goals This Period / Next Period</summary>
+          <div class="detail-list">
+            <h4>Testing QA:</h4>
+            <ul>
+              <li>BoB - [FE] - Single Flow Path - Landing Page / UI Revisions - UI Enhancements</li>
+              <li>BoB - [BE] - Single Flow Path - All API Endpoint Security for Back-End</li>
+              <li>Docs AI Classification | Max File Size (Gemini) Issue</li>
+              <li>Docs | UI | Pull only non-trashed Documents</li>
+              <li>Angular Upgrade | code cleanup</li>
+              <li>Clear Docs [BE] | Borrower Viewable Documents to align with CX Home Portal</li>
+            </ul>
+
+            <h4>Code Review:</h4>
+            <ul>
+              <li>BoB - [BE] - Single Flow Path - Bundle Dropdown Features</li>
+              <li>DOCS | UI | Enable Sort/Rearrange Action in Split Document Process</li>
+              <li>Clear Docs | File Processing | Not all documents Convert Word, Excel, HTML Docs to PDF Files so cannot Preview</li>
+            </ul>
+
+            <h4>In Dev:</h4>
+            <ul>
+              <li>Prod Cleanup Duplicated Documents</li>
+              <li>BoB - [BE] EPS API - Bundle Stack Order document details for a Loan File By BundleID andFiledataID</li>
+              <li>Angular Upgrade | PrimeNG v18</li>
+            </ul>
+
+            <h4>Ready For Dev:</h4>
+            <ul>
+              <li>BoB - [FE] - Bundle Management Single Flow Path - BytePro Bundle API Integration (25.2 Release Effort) Mapping</li>
+              <li>DOCS | UI | Sort/Rearrange Updates - User Request</li>
+              <li>Angular Upgrade | Performance Unit Testing Post-Upgrade</li>
+              <li>DOCS| Sending Doc Requests - Team Email Address Selection Instead of Individual(Requestor)</li>
+              <li>BoB - [BE] Bundle Management Single Flow Path - BytePro Bundle API Integration (25.2 Release Effort) Item #1</li>
+              <li>BoB - [BE] Bundle Management Single Flow Path - BytePro Bundle API Integration (25.2 Release Effort) Item #2</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category risks">
+          <summary>Critical Risks and Mitigations</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Team Docs has a new Product Owner who is currently on a learning curve, which may impact the upcoming sprint.</li>
+            </ul>
+          </div>
+        </details>
       </div>
     </div>
 
@@ -157,13 +427,57 @@
           <div class="metric-label">Goals</div>
         </div>
         <div class="metric-box">
-          <div class="metric-number amber">0</div>
+          <div class="metric-number amber">1</div>
           <div class="metric-label">Blockers</div>
         </div>
         <div class="metric-box">
           <div class="metric-number rose">1</div>
           <div class="metric-label">Risks</div>
         </div>
+      </div>
+
+      <div class="details-section">
+        <details class="detail-category accomplishments">
+          <summary>Accomplishments Last Period</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Closed Loan Initiative</li>
+              <li>Partners Pipeline MVP</li>
+              <li>Partners Co-Branding MVP</li>
+              <li>Byte Profiles in Clear</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category goals">
+          <summary>Goals This Period / Next Period</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Partner Portal new items</li>
+              <li>TPO/Wholesale prioritized work</li>
+              <li>Feature flag removals and tech tackling tech debts until higher priority work shows up</li>
+              <li>Arches & Zion Sp11</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category blockers">
+          <summary>Blockers and Dependencies</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Some work items to be rearranged due to the new team structure with Shailendra being the Dev Manager for the whole EX side.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category risks">
+          <summary>Critical Risks and Mitigations</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Some work items to be rearranged due to the new team structure with Shailendra being the Dev Manager for the whole EX side.</li>
+            </ul>
+          </div>
+        </details>
       </div>
     </div>
 
@@ -191,6 +505,36 @@
           <div class="metric-label">Risks</div>
         </div>
       </div>
+
+      <div class="details-section">
+        <details class="detail-category accomplishments">
+          <summary>Accomplishments Last Period</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Scenario Pricing 2.0 | Phase 1H1: Scenario Cards</li>
+              <li>Scenario Pricing 2.0 | Phase 1G2: Govey MI Factors</li>
+              <li>Sandbox 2.0</li>
+              <li>Feature Flag Management</li>
+              <li>AUS | DU PDF Support</li>
+              <li>CCW 1.6 | Change AMC name for Apple to Ascribe, LLC</li>
+              <li>Credit | Xactus 360 - Copy Loan - Older Credit Report Reissued (Credit Plus Instead of Xactus) [Intake 832]</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category goals">
+          <summary>Goals This Period / Next Period</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Sandbox 2.0</li>
+              <li>Scenario Pricing 2.0 | Phase 1H2: Scenario Tabs</li>
+              <li>Scenario Pricing 2.0 | Phase 1J2: Add Run Fees to Scenario Pricing</li>
+              <li>Feature Flag Management</li>
+              <li>Angular 20 Upgrade</li>
+            </ul>
+          </div>
+        </details>
+      </div>
     </div>
 
     <!-- Team Yosemite -->
@@ -216,6 +560,32 @@
           <div class="metric-number rose">0</div>
           <div class="metric-label">Risks</div>
         </div>
+      </div>
+
+      <div class="details-section">
+        <details class="detail-category accomplishments">
+          <summary>Accomplishments Last Period</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Scenario Pricing 2.0 | Phase 1J2: Add Run Fees to Scenario Pricing</li>
+              <li>BNL Rule Update</li>
+              <li>CMG Bank Migration</li>
+              <li>WHS/PTO - Clear 1.0 - Removal of STPEscrow011</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category goals">
+          <summary>Goals This Period / Next Period</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Upgrade EPS, Rules Engine, Disclosures to .NET 10</li>
+              <li>BNL: Update BNL Into to use GPT-5-mini</li>
+              <li>CMG Bank</li>
+              <li>Automation ESP-API Framework</li>
+            </ul>
+          </div>
+        </details>
       </div>
     </div>
 
@@ -243,6 +613,44 @@
           <div class="metric-label">Risks</div>
         </div>
       </div>
+
+      <div class="details-section">
+        <details class="detail-category accomplishments">
+          <summary>Accomplishments Last Period</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Finished Sprint 2026.01.07</li>
+              <li>Performed the deployment of the release candidates on January 7th.</li>
+              <li>Planned and started Sprint 2026.01.28</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category goals">
+          <summary>Goals This Period / Next Period</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Continue Sprint 2026.01.28</li>
+              <li>Continue onboarding and helping Stephen to understand CX processes</li>
+              <li>Collaborate with the team to understand next steps after the recent changes on the CX leadership</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category blockers">
+          <summary>Blockers and Dependencies</summary>
+          <div class="detail-list">
+            <ul>
+              <li><strong>Ticket 64822:</strong> MyHome | Loan Information | FHA Loans | The HUD number for FHA loan isn't displayed on the loan information tab. - Issue: Blocked because user's loan has a different case number (different than the expected HUD number). Waiting Meghan's instructions on how to proceed and expose on the borrower portal.</li>
+              <li><strong>Ticket 65036:</strong> MyHome | Make a Payment | The down arrow from the Pay for dropdown isn't aligned with the "Payment Amount" and "More Details" texts - Issue: The issue was found on the new Borrower Portal V2, and CX team is currently working on the Portal V1. The team is waiting for a decision from product about when they are going to start working with the new version of the Portal.</li>
+              <li><strong>Ticket 73820:</strong> Remove ability to pay off mortgage when loan is setup under full deferment, forbearance or modification plan - Issue: Blocked because there's a dependency on the Servicing team. Waiting for Angi's response about the scenarios in which borrowers can or cannot pay off their mortgage (this info will define the implementation).</li>
+              <li><strong>Ticket 87048:</strong> CX Portal | Payment Activity | Inactive/Closed Escrow Accounts - Show "Inactive" Label and Move to End of List - Issue: The issue was found on the new Borrower Portal V2, and CX team is currently working on the Portal V1. The team is waiting for a decision from product about when they are going to start working with the new version of the Portal.</li>
+              <li><strong>Ticket 87116:</strong> MyHome | Make a Payment | Borrowers should not be able to make a payment amount lesser than $1.00 - Issue: Blocked because Sai is waiting for the Azure table that stores the messages Angi/Meghan need to review the message and approve, so Sai can change on the table and finish the implementation. Waiting for Azure Blob table.</li>
+              <li><strong>Ticket 91173:</strong> CX Portal | Dashboard | Do not show "Current" Label for Delinquent Loans - Issue: The issue was found on the new Borrower Portal V2, and CX team is currently working on the Portal V1. The team is waiting for a decision from product about when they are going to start working with the new version of the Portal.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
     </div>
 
     <!-- MX Team -->
@@ -269,12 +677,43 @@
           <div class="metric-label">Risks</div>
         </div>
       </div>
+
+      <div class="details-section">
+        <details class="detail-category accomplishments">
+          <summary>Accomplishments Last Period</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Development of Sprint 26 tickets</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category goals">
+          <summary>Goals This Period / Next Period</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Development of Sprint 26 tickets</li>
+              <li>Development of APIs needed for Bank project</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category risks">
+          <summary>Critical Risks and Mitigations</summary>
+          <div class="detail-list">
+            <ul>
+              <li>The capacity of the current sprint will be reduced, due to the holidays season.</li>
+              <li>To minimize the impact of the holidays on deliveries, this sprint will last three weeks.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
     </div>
 
     <!-- Team Capybara -->
     <div class="team-section">
       <div class="team-header">
-        <h2 class="team-title">Team Capybara - Servicing</h2>
+        <h2 class="team-title">Team Capybara</h2>
         <span class="team-lead">Gabriel Lázaro</span>
       </div>
       <div class="metrics-grid">
@@ -295,12 +734,51 @@
           <div class="metric-label">Risks</div>
         </div>
       </div>
+
+      <div class="details-section">
+        <details class="detail-category accomplishments">
+          <summary>Accomplishments Last Period</summary>
+          <div class="detail-list">
+            <h4>Hold for UAT:</h4>
+            <ul>
+              <li>Premier Print (Intake 919): Onboard Premier print docs from the intake folder</li>
+              <li>Premier Print (Intake 920): Show Premier docs on both LOS and servicing side</li>
+              <li>Premier Print (Intake 921): Expose Premier Print to borrower portal (CX side)</li>
+              <li>EIQ (Intake 925): Create mechanism to trigger Guideline updates on Demand</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category goals">
+          <summary>Goals This Period / Next Period</summary>
+          <div class="detail-list">
+            <h4>QA + Development:</h4>
+            <ul>
+              <li>Angular upgrade to version 19 (Intake 928)</li>
+              <li>Encompass: Refactor Encompass Integration to use Ellie Mae SDK (Intake 890)</li>
+              <li>CMG Bank - Lender Paid MI (Intake 904)</li>
+              <li>CMG Bank - Create mechanism to onboard Non-BPO valuations (Intake 917)</li>
+              <li>CMG Bank - Onboard LQA docs from LoanServ Webservice (Intake 922)</li>
+              <li>Closing Disclosure (CD): Ensure CD is aligned for Bank and TPO transactions (Intake 930)</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category risks">
+          <summary>Critical Risks and Mitigations</summary>
+          <div class="detail-list">
+            <ul>
+              <li>Infra solution for Premier Print docs onboarding from intake folder: risk happened and contingency plan put in place → team has migrated the solution from Container Apps to Azure Functions.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
     </div>
 
     <!-- Team Panda -->
     <div class="team-section">
       <div class="team-header">
-        <h2 class="team-title">Team Panda - Servicing</h2>
+        <h2 class="team-title">Team Panda</h2>
         <span class="team-lead">Gabriel Lázaro</span>
       </div>
       <div class="metrics-grid">
@@ -321,12 +799,57 @@
           <div class="metric-label">Risks</div>
         </div>
       </div>
+
+      <div class="details-section">
+        <details class="detail-category accomplishments">
+          <summary>Accomplishments Last Period</summary>
+          <div class="detail-list">
+            <h4>Ready to be Released:</h4>
+            <ul>
+              <li>CMG Bank - Refactor doc stacking for CMG Bank (Intake 869)</li>
+              <li>CMG Bank - All fee types should be available on search for CMG Bank transactions (Intake 913)</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="detail-category goals">
+          <summary>Goals This Period / Next Period</summary>
+          <div class="detail-list">
+            <h4>Development / QA:</h4>
+            <ul>
+              <li>CMG Bank - Support CMG Bank at CD milestone (Intake 870)</li>
+              <li>CMG Bank - Capture data related to CMG Bank (Intake 871)</li>
+              <li>CMG Bank - Support CMG Bank employees at LE milestone (Intake 872)</li>
+              <li>CMG Bank - Create Closing Instructions doc for Bank transactions (Intake 899)</li>
+              <li>CMG Bank - Support CMG Bank employees at Appraisal milestone (Intake 900)</li>
+              <li>CMG Bank - Support CMG Bank employees at Underwriting milestone (Intake 901)</li>
+              <li>CMG Bank - Onboard Fee types needed for Bank transactions (Intake 902)</li>
+              <li>CMG Bank - Onboard doc types needed for Bank transactions (Intake 903)</li>
+              <li>CMG Bank - Map additional URLA 1003 fields needed for CMG Bank transactions (Intake 905)</li>
+              <li>CMG Bank - Update existing and create new mapping points for Bank transactions (Intake 906)</li>
+              <li>CMG Bank - Onboard new Clear users to support Bank transactions in CLEAR (Intake 907)</li>
+              <li>CMG Bank - Adapt Post Closing workflow and dashboard to support Bank transactions (Intake 908)</li>
+              <li>CMG Bank - Store data from APIs calls made to vendors for Bank transactions (Intake 909)</li>
+              <li>CMG Bank - Ensure data from APIs and webhooks is being captured for Bank transactions (Intake 910)</li>
+              <li>CMG Bank - Implement changes needed at Pre-approval/Prequalification milestone for Bank transactions (Intake 911)</li>
+              <li>CMG Bank - Support disclosures flow on both parties sides for Bank transactions (Intake 912)</li>
+              <li>CMG Bank - Ensure eClose flow is ready for Bank transactions (Intake 914)</li>
+              <li>CMG Bank - Ensure Homeowner Insurance info and docs are being onboarded correctly (Intake 915)</li>
+              <li>CMG Bank - Configure and adapt workflow and dashboard for Bank transactions (Intake 916)</li>
+              <li>CMG Bank - Support Bank transactions on Data Migration requests (Intake 918)</li>
+              <li>CMG Bank - Implement changes needed at Prequal milestone (Bank employees) (Intake 926)</li>
+              <li>CMG Bank - Create workflow to auto-detect Bank transactions in Clear environment (Intake 927)</li>
+              <li>CMG Bank - Retrieve and onboard CMG Bank transactions data from Byte into CLEAR (Intake 929)</li>
+            </ul>
+          </div>
+        </details>
+      </div>
     </div>
+
   </div>
 
   <script src="../assets/js/calendar.js"></script>
   <script>
-    // Set this week as selected in the calendar
     setSelectedWeek('2026-01-09');
   </script>
 </body>
