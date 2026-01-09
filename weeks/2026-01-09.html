@@ -19,64 +19,58 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid var(--border-subtle);
     }
 
     .team-title {
-      font-size: 1.75rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--accent-teal);
     }
 
-    .section-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 1.5rem;
+    .team-lead {
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
     }
 
-    .section {
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .metric-box {
       background: var(--bg-secondary);
-      padding: 1.5rem;
-      border-radius: 12px;
+      padding: 1.25rem;
+      border-radius: 8px;
+      text-align: center;
       border: 1px solid var(--border-subtle);
     }
 
-    .section-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--accent-blue);
+    .metric-number {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-number.blue { color: var(--accent-blue); }
+    .metric-number.teal { color: var(--accent-teal); }
+    .metric-number.amber { color: var(--accent-amber); }
+    .metric-number.rose { color: var(--accent-rose); }
+
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 1rem;
-    }
-
-    .item-list {
-      list-style: none;
-    }
-
-    .item-list li {
-      padding: 0.5rem 0;
-      padding-left: 1.5rem;
-      position: relative;
-      line-height: 1.6;
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-    }
-
-    .item-list li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: var(--accent-teal);
-      font-weight: bold;
     }
 
     @media (max-width: 768px) {
-      .section-grid {
-        grid-template-columns: 1fr;
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
@@ -90,68 +84,250 @@
   </header>
 
   <div class="container">
-    <!-- Week Selector -->
-    <div class="week-selector">
-      <a href="../" class="week-btn">Dashboard</a>
-      <a href="./2026-01-09.html" class="week-btn active">Week of Jan 9, 2026</a>
-      <a href="./2025-12-29.html" class="week-btn">Week of Dec 29, 2025</a>
-      <a href="./2025-12-08.html" class="week-btn">Week of Dec 8, 2025</a>
-      <a href="./2025-11-24.html" class="week-btn">Week of Nov 24, 2025</a>
+    <!-- Calendar -->
+    <div class="calendar-container">
+      <div id="calendar"></div>
     </div>
 
     <!-- Salesforce Team -->
     <div class="team-section">
       <div class="team-header">
         <h2 class="team-title">Salesforce Team</h2>
-        <span style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">Jonathan Sandoval</span>
+        <span class="team-lead">Jonathan Sandoval</span>
       </div>
-
-      <div class="section-grid">
-        <div class="section">
-          <div class="section-title">Accomplishments Last Period</div>
-          <ul class="item-list">
-            <li>Ready for UAT: Add "Reason for Default" to the Collections and Loss Mitigation Disposition Codes - 89536</li>
-            <li>Escrow | Escrow Data Mapping Phase 1 - 84574</li>
-            <li>Third Party Authorizations - Data Mapping - 87735</li>
-            <li>Enhancement | FEMA workflow language change - 86885</li>
-            <li>UAT Pass: Disposition Error - BUG 91235</li>
-            <li>Add admin bypass to case and voicecall validation rules - 85200</li>
-          </ul>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">8</div>
+          <div class="metric-label">Accomplishments</div>
         </div>
-
-        <div class="section">
-          <div class="section-title">Goals This Period / Next Period</div>
-          <ul class="item-list">
-            <li>Enhancement | FEMA Related Fields Displayed on Timeline within Case - 89684</li>
-            <li>PAYMENT | Enhancement | Pay Now uses GetPaymentOptionsDetails to calculate Amount Due - 83056</li>
-            <li>Outlook Email Integration With Intelligent Loan/Customer Lookup - 89076</li>
-            <li>LoanServ Script | E-Bill Consent | Borrower Updates | APIBORRW - 55318</li>
-            <li>Display Created Date in Timeline Subject for Cases and Tasks on Loan - 91656</li>
-            <li>Critical: ODS Sync Dual Bugs - Performance + Data Sync Failures - BUG 92088</li>
-          </ul>
+        <div class="metric-box">
+          <div class="metric-number teal">6</div>
+          <div class="metric-label">Goals</div>
         </div>
-
-        <div class="section">
-          <div class="section-title">Blockers and Work Arounds</div>
-          <p style="color: var(--text-muted); font-style: italic;">No blockers reported</p>
+        <div class="metric-box">
+          <div class="metric-number amber">0</div>
+          <div class="metric-label">Blockers</div>
         </div>
-
-        <div class="section">
-          <div class="section-title">Critical Risks and Mitigations</div>
-          <p style="color: var(--text-muted); font-style: italic;">No critical risks reported</p>
+        <div class="metric-box">
+          <div class="metric-number rose">0</div>
+          <div class="metric-label">Risks</div>
         </div>
       </div>
     </div>
 
-    <!-- Add note about full detail pages -->
-    <div class="card" style="text-align: center; padding: 3rem;">
-      <h3 style="color: var(--accent-teal); margin-bottom: 1rem;">Full Team Details</h3>
-      <p style="color: var(--text-secondary);">
-        This is a sample week detail page showing the Salesforce Team. <br>
-        Full detail pages for all teams can be generated using the same template structure.
-      </p>
-      <a href="../" class="week-btn" style="margin-top: 2rem;">Return to Dashboard</a>
+    <!-- Docs Team -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Docs Team</h2>
+        <span class="team-lead">Jonathan Sandoval</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">23</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">15</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">1</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">1</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Arches & Zion -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Arches & Zion</h2>
+        <span class="team-lead">Rafael Souza</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">4</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">6</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">0</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">1</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Badlands -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Badlands</h2>
+        <span class="team-lead">Carolina Barreto</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">7</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">7</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">0</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">0</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Yosemite -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Yosemite</h2>
+        <span class="team-lead">Carolina Barreto</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">4</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">8</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">0</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">0</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CX Team -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">CX Team</h2>
+        <span class="team-lead">Isadora Barros Braz</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">3</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">3</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">6</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">0</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MX Team -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">MX Team</h2>
+        <span class="team-lead">Thais Tome</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">1</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">2</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">0</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">2</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Capybara -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Capybara - Servicing</h2>
+        <span class="team-lead">Gabriel Lázaro</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">4</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">6</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">0</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">1</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Panda -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Panda - Servicing</h2>
+        <span class="team-lead">Gabriel Lázaro</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">2</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">23</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">0</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">0</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <script src="../assets/js/calendar.js"></script>
+  <script>
+    // Set this week as selected in the calendar
+    setSelectedWeek('2026-01-09');
+  </script>
 </body>
 </html>

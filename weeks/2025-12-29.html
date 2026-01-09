@@ -84,13 +84,9 @@
   </header>
 
   <div class="container">
-    <!-- Week Selector -->
-    <div class="week-selector">
-      <a href="../" class="week-btn">Dashboard</a>
-      <a href="./2026-01-09.html" class="week-btn">Week of Jan 9, 2026</a>
-      <a href="./2025-12-29.html" class="week-btn active">Week of Dec 29, 2025</a>
-      <a href="./2025-12-08.html" class="week-btn">Week of Dec 8, 2025</a>
-      <a href="./2025-11-24.html" class="week-btn">Week of Nov 24, 2025</a>
+    <!-- Calendar -->
+    <div class="calendar-container">
+      <div id="calendar"></div>
     </div>
 
     <!-- Salesforce Team -->
@@ -327,5 +323,11 @@
       </div>
     </div>
   </div>
+
+  <script src="../assets/js/calendar.js"></script>
+  <script>
+    // Set this week as selected in the calendar
+    setSelectedWeek('2025-12-29');
+  </script>
 </body>
 </html>
