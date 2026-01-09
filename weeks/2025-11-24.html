@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week of Nov 24, 2025 | Scrum of Scrums</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <style>
+    .team-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .team-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .team-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-teal);
+    }
+
+    .team-lead {
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .metric-box {
+      background: var(--bg-secondary);
+      padding: 1.25rem;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .metric-number {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-number.blue { color: var(--accent-blue); }
+    .metric-number.teal { color: var(--accent-teal); }
+    .metric-number.amber { color: var(--accent-amber); }
+    .metric-number.rose { color: var(--accent-rose); }
+
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>Scrum of Scrums</h1>
+      <p class="subtitle">Week ending November 24, 2025</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Week Selector -->
+    <div class="week-selector">
+      <a href="../" class="week-btn">Dashboard</a>
+      <a href="./2026-01-09.html" class="week-btn">Week of Jan 9, 2026</a>
+      <a href="./2025-12-29.html" class="week-btn">Week of Dec 29, 2025</a>
+      <a href="./2025-12-08.html" class="week-btn">Week of Dec 8, 2025</a>
+      <a href="./2025-11-24.html" class="week-btn active">Week of Nov 24, 2025</a>
+    </div>
+
+    <!-- Salesforce Team -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Salesforce Team</h2>
+        <span class="team-lead">Jonathan Sandoval</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">9</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">6</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">2</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">2</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Hema -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Hema</h2>
+        <span class="team-lead">Jonathan Sandoval</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">20</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">18</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">1</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">1</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Arches & Zion -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Arches & Zion</h2>
+        <span class="team-lead">Rafael Souza</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">4</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">6</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">0</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">1</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Badlands -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Badlands</h2>
+        <span class="team-lead">Carolina Barreto</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">7</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">7</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">1</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">0</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Yosemite -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Yosemite</h2>
+        <span class="team-lead">Carolina Barreto</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">12</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">8</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">0</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">0</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CX Team -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">CX Team</h2>
+        <span class="team-lead">Isadora Barros Braz</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">4</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">8</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">2</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">1</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MX Team -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">MX Team</h2>
+        <span class="team-lead">Thais Tome</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">2</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">3</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">0</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">1</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Capybara -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Capybara - Servicing</h2>
+        <span class="team-lead">Gabriel Lázaro</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">11</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">6</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">1</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">0</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Panda -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2 class="team-title">Team Panda - Servicing</h2>
+        <span class="team-lead">Gabriel Lázaro</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-number blue">21</div>
+          <div class="metric-label">Accomplishments</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number teal">12</div>
+          <div class="metric-label">Goals</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number amber">1</div>
+          <div class="metric-label">Blockers</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-number rose">0</div>
+          <div class="metric-label">Risks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
