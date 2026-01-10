@@ -17,12 +17,20 @@ export default async function handler(req, res) {
   try {
     const { messages, model = 'openai/gpt-3.5-turbo' } = req.body;
 
+    // Debug: Check if API key is loaded
+    const apiKey = process.env.OPENROUTER_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({ error: 'API key not configured' });
+    }
+
+    console.log('API Key loaded, first 10 chars:', apiKey.substring(0, 10));
+
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://scrum-of-scrums-dashboard.vercel.app',
+        'HTTP-Referer': 'https://scrum-of-scrums.vercel.app',
         'X-Title': 'Scrum of Scrums Dashboard'
       },
       body: JSON.stringify({
