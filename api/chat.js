@@ -20,10 +20,18 @@ export default async function handler(req, res) {
     // Debug: Check if API key is loaded
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) {
-      return res.status(500).json({ error: 'API key not configured' });
+      return res.status(500).json({
+        error: 'API key not configured',
+        debug: {
+          envKeys: Object.keys(process.env).filter(k => k.includes('OPEN')),
+          nodeEnv: process.env.NODE_ENV
+        }
+      });
     }
 
     console.log('API Key loaded, first 10 chars:', apiKey.substring(0, 10));
+    console.log('API Key length:', apiKey.length);
+    console.log('API Key last 5 chars:', apiKey.substring(apiKey.length - 5));
 
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
@@ -41,7 +49,16 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       const error = await response.text();
-      return res.status(response.status).json({ error: `OpenRouter API error: ${error}` });
+      return res.status(response.status).json({
+        error: `OpenRouter API error: ${error}`,
+        debug: {
+          keyPrefix: apiKey.substring(0, 15),
+          keySuffix: apiKey.substring(apiKey.length - 10),
+          keyLength: apiKey.length,
+          model: model,
+          url: 'https://openrouter.ai/api/v1/chat/completions'
+        }
+      });
     }
 
     const data = await response.json();
