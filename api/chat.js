@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { messages, model = 'gpt-4o' } = req.body;
+    const { messages, model = 'gpt-5' } = req.body;
 
     const apiKey = process.env.OPENAI_API_KEY?.trim();
 
