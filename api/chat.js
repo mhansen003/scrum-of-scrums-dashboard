@@ -15,22 +15,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { messages, model = 'anthropic/claude-3.5-sonnet' } = req.body;
+    const { messages, model = 'gpt-4o' } = req.body;
 
-    // Trim any whitespace/newlines from the API key
-    const apiKey = process.env.OPENROUTER_API_KEY?.trim();
-
-    // Debug logging
-    console.log('=== OpenRouter Request Debug ===');
-    console.log('API Key exists:', !!apiKey);
-    console.log('API Key length:', apiKey?.length);
-    console.log('API Key prefix:', apiKey?.substring(0, 15));
-    console.log('API Key suffix:', apiKey?.substring(apiKey.length - 10));
-    console.log('Model:', model);
-    console.log('Messages count:', messages?.length);
+    const apiKey = process.env.OPENAI_API_KEY?.trim();
 
     if (!apiKey) {
-      return res.status(500).json({ error: 'OpenRouter API key not configured' });
+      return res.status(500).json({ error: 'OpenAI API key not configured' });
     }
 
     const requestBody = {
@@ -41,32 +31,24 @@ export default async function handler(req, res) {
     const requestHeaders = {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
-      'HTTP-Referer': 'https://scrum-of-scrums.vercel.app',
     };
 
-    console.log('Request headers:', Object.keys(requestHeaders));
-    console.log('Request body model:', requestBody.model);
-
-    // Use fetch() directly like the working pipeline-intel project
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    // Use OpenAI API directly
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: requestHeaders,
       body: JSON.stringify(requestBody),
     });
 
-    console.log('OpenRouter response status:', response.status);
-    console.log('OpenRouter response ok:', response.ok);
-
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('OpenRouter error response:', JSON.stringify(errorData));
+      console.error('OpenAI error:', errorData);
       return res.status(500).json({
-        error: `OpenRouter API error: ${errorData.error?.message || errorData.error || response.statusText}`
+        error: `OpenAI API error: ${errorData.error?.message || response.statusText}`
       });
     }
 
     const data = await response.json();
-    console.log('OpenRouter success! Response has choices:', !!data.choices);
     res.status(200).json(data);
 
   } catch (error) {
