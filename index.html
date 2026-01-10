@@ -278,6 +278,172 @@
     }
 
     .report-tile:nth-child(n) { animation-delay: calc(0.05s * var(--i)); }
+
+    /* AI Search Styles */
+    .search-container {
+      max-width: 800px;
+      margin: 0 auto 3rem auto;
+      position: relative;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 1rem;
+      background: var(--bg-card);
+      border: 2px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1rem 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+
+    .search-icon {
+      width: 24px;
+      height: 24px;
+      fill: var(--text-muted);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.1rem;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-button {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 2rem;
+      color: white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .search-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .search-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .search-button:disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .ai-badge-search {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.25rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .search-results {
+      margin-top: 2rem;
+      display: none;
+    }
+
+    .search-results.show {
+      display: block;
+    }
+
+    .search-result-header {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .result-count {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .search-result-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+    }
+
+    .search-result-item:hover {
+      border-color: var(--accent-teal);
+      transform: translateX(8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .result-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .result-snippet {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .search-loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+
+    .search-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border-subtle);
+      border-top-color: var(--accent-teal);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
   </style>
 </head>
 <body>
@@ -293,6 +459,34 @@
       <h1>Scrum of Scrums</h1>
       <p class="subtitle">Weekly Team Updates & Progress Reports</p>
     </header>
+
+    <!-- AI Search -->
+    <div class="search-container">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input
+          type="text"
+          class="search-input"
+          id="searchInput"
+          placeholder="Search across all reports using AI..."
+          onkeydown="handleSearchKeypress(event)"
+        />
+        <button class="search-button" id="searchButton" onclick="performSearch()">
+          <span>Search</span>
+          <span class="ai-badge-search">AI</span>
+        </button>
+      </div>
+
+      <div class="search-results" id="searchResults">
+        <div class="search-result-header">
+          <span>Search Results</span>
+          <span class="result-count" id="resultCount"></span>
+        </div>
+        <div id="resultsList"></div>
+      </div>
+    </div>
 
     <div class="reports-grid">
       <!-- Jan 9, 2026 -->
@@ -463,6 +657,172 @@
         document.getElementById('loadingOverlay').classList.remove('hidden');
       });
     });
+
+    // AI Search Functionality
+    const OPENROUTER_API_KEY = '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';
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+    const searchResults = document.getElementById('searchResults');
+    const resultsList = document.getElementById('resultsList');
+    const resultCount = document.getElementById('resultCount');
+
+    const reportsData = [
+      { date: '2026-01-09', title: 'January 9, 2026', url: './weeks/2026-01-09.html', teams: 9 },
+      { date: '2025-12-29', title: 'December 29, 2025', url: './weeks/2025-12-29.html', teams: 9 },
+      { date: '2025-12-08', title: 'December 8, 2025', url: './weeks/2025-12-08.html', teams: 9 },
+      { date: '2025-11-24', title: 'November 24, 2025', url: './weeks/2025-11-24.html', teams: 9 },
+      { date: '2025-11-17', title: 'November 17, 2025', url: './weeks/2025-11-17.html', teams: 8 },
+      { date: '2025-11-03', title: 'November 3, 2025', url: './weeks/2025-11-03.html', teams: 9 },
+      { date: '2025-10-27', title: 'October 27, 2025', url: './weeks/2025-10-27.html', teams: 9 },
+      { date: '2025-10-20', title: 'October 20, 2025', url: './weeks/2025-10-20.html', teams: 11 },
+      { date: '2025-10-13', title: 'October 13, 2025', url: './weeks/2025-10-13.html', teams: 9 },
+      { date: '2025-10-06', title: 'October 6, 2025', url: './weeks/2025-10-06.html', teams: 10 },
+      { date: '2025-09-29', title: 'September 29, 2025', url: './weeks/2025-09-29.html', teams: 10 },
+      { date: '2025-09-22', title: 'September 22, 2025', url: './weeks/2025-09-22.html', teams: 9 },
+      { date: '2025-09-15', title: 'September 15, 2025', url: './weeks/2025-09-15.html', teams: 11 },
+      { date: '2025-09-08', title: 'September 8, 2025', url: './weeks/2025-09-08.html', teams: 9 },
+      { date: '2025-09-02', title: 'September 2, 2025', url: './weeks/2025-09-02.html', teams: 9 },
+      { date: '2025-08-25', title: 'August 25, 2025', url: './weeks/2025-08-25.html', teams: 12 }
+    ];
+
+    function handleSearchKeypress(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        performSearch();
+      }
+    }
+
+    async function performSearch() {
+      const query = searchInput.value.trim();
+      if (!query) return;
+
+      // Disable button and input
+      searchButton.disabled = true;
+      searchInput.disabled = true;
+
+      // Show loading state
+      searchResults.classList.add('show');
+      resultsList.innerHTML = `
+        <div class="search-loading">
+          <div class="search-spinner"></div>
+          <p>Searching across all reports...</p>
+        </div>
+      `;
+
+      try {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': window.location.href,
+            'X-Title': 'Scrum of Scrums Dashboard'
+          },
+          body: JSON.stringify({
+            model: 'anthropic/claude-sonnet-4.5',
+            messages: [
+              {
+                role: 'system',
+                content: `You are a search assistant for a Scrum of Scrums dashboard. The user has 16 reports available spanning from August 25, 2025 to January 9, 2026.
+
+When a user searches, you should:
+1. Understand what they're looking for (team names, specific topics, time periods, blockers, accomplishments, etc.)
+2. Return a JSON array of relevant report dates that might contain the information they're seeking
+3. Include a brief explanation of why each report is relevant
+
+Available reports (by date):
+${reportsData.map(r => `- ${r.date}: ${r.title} (${r.teams} teams)`).join('\n')}
+
+Return your response as a JSON object with this structure:
+{
+  "results": [
+    {
+      "date": "YYYY-MM-DD",
+      "relevance": "Brief explanation of why this report is relevant"
+    }
+  ]
+}
+
+If the query is too vague or matches all reports, return the 3-5 most recent ones. If it's very specific (like a time period), return only matching reports.`
+              },
+              {
+                role: 'user',
+                content: query
+              }
+            ]
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`API request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const aiResponse = data.choices[0].message.content;
+
+        // Parse the JSON response
+        let searchData;
+        try {
+          // Extract JSON from markdown code blocks if present
+          const jsonMatch = aiResponse.match(/```json\n?([\s\S]*?)\n?```/) || aiResponse.match(/\{[\s\S]*\}/);
+          const jsonStr = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : aiResponse;
+          searchData = JSON.parse(jsonStr);
+        } catch (e) {
+          throw new Error('Failed to parse AI response');
+        }
+
+        // Display results
+        displaySearchResults(searchData.results || [], query);
+
+      } catch (error) {
+        resultsList.innerHTML = `
+          <div class="search-loading">
+            <p style="color: var(--accent-rose);">Error: ${error.message}</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Please try again.</p>
+          </div>
+        `;
+      } finally {
+        searchButton.disabled = false;
+        searchInput.disabled = false;
+      }
+    }
+
+    function displaySearchResults(results, query) {
+      if (!results || results.length === 0) {
+        resultsList.innerHTML = `
+          <div class="search-loading">
+            <p>No relevant reports found for "${query}".</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Try a different search term.</p>
+          </div>
+        `;
+        resultCount.textContent = '0 reports';
+        return;
+      }
+
+      resultCount.textContent = `${results.length} ${results.length === 1 ? 'report' : 'reports'}`;
+
+      const html = results.map(result => {
+        const report = reportsData.find(r => r.date === result.date);
+        if (!report) return '';
+
+        return `
+          <a href="${report.url}" class="search-result-item">
+            <div class="result-date">Period Ending ${result.date}</div>
+            <div class="result-title">${report.title}</div>
+            <div class="result-snippet">${result.relevance}</div>
+          </a>
+        `;
+      }).join('');
+
+      resultsList.innerHTML = html;
+
+      // Add click handlers to show loading
+      document.querySelectorAll('.search-result-item').forEach(item => {
+        item.addEventListener('click', function() {
+          document.getElementById('loadingOverlay').classList.remove('hidden');
+        });
+      });
+    }
   </script>
 </body>
 </html>
