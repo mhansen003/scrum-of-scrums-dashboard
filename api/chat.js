@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { messages, model = 'openai/gpt-3.5-turbo' } = req.body;
+    const { messages, model = 'anthropic/claude-3.5-sonnet' } = req.body;
 
     // Trim any whitespace/newlines from the API key
     const apiKey = process.env.OPENROUTER_API_KEY?.trim();
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
     const requestHeaders = {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
-      'HTTP-Referer': process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://scrum-of-scrums.vercel.app',
+      'HTTP-Referer': 'https://scrum-of-scrums.vercel.app',
     };
 
     console.log('Request headers:', Object.keys(requestHeaders));
