@@ -17,7 +17,8 @@ export default async function handler(req, res) {
   try {
     const { messages, model = 'openai/gpt-3.5-turbo' } = req.body;
 
-    const apiKey = process.env.OPENROUTER_API_KEY;
+    // Trim any whitespace/newlines from the API key
+    const apiKey = process.env.OPENROUTER_API_KEY?.trim();
 
     // Debug logging
     console.log('=== OpenRouter Request Debug ===');
