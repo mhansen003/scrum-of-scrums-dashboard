@@ -1,0 +1,13 @@
+{
+  "name": "scrum-of-scrums",
+  "version": "1.0.0",
+  "description": "Scrum of Scrums Dashboard with AI-powered search and chat",
+  "type": "module",
+  "dependencies": {
+    "openai": "^4.76.0"
+  },
+  "scripts": {
+    "dev": "echo 'Deploy to Vercel for testing'",
+    "build": "echo 'No build step required'"
+  }
+}
