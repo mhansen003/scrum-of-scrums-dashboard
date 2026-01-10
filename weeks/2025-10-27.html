@@ -277,25 +277,6 @@
       right: 40px;
     }
 
-    .keyboard-hint {
-      position: fixed;
-      bottom: 30px;
-      left: 40px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .key {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
     .nav-buttons {
       position: fixed;
       bottom: 30px;
@@ -1159,9 +1140,6 @@
     <div class="nav-dots" id="navDots"></div>
   </div>
   <div class="slide-number" id="slideNumber">1 / 9</div>
-  <div class="keyboard-hint">
-    <span class="key">←</span><span class="key">→</span> or <span class="key">Space</span> to navigate
-  </div>
 
   <div class="nav-buttons">
     <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Previous</button>
@@ -1204,7 +1182,6 @@
       <button class="chat-send" id="chatSend" onclick="sendMessage()">Send</button>
     </div>
   </div>
-
 
   <script>
     const slides = document.querySelectorAll('.slide');
@@ -1252,39 +1229,6 @@
       currentSlide = index;
       updateSlide();
     }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight' || e.key === ' ') {
-        e.preventDefault();
-        nextSlide();
-      } else if (e.key === 'ArrowLeft') {
-        prevSlide();
-      }
-    });
-
-    // Touch/swipe support
-    let touchStartX = 0;
-    document.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-    });
-    document.addEventListener('touchend', (e) => {
-      const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) {
-        diff > 0 ? nextSlide() : prevSlide();
-      }
-    });
-
-    // Click to advance (except on interactive elements)
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.nav, .nav-dot, a, button, .chat-button, .chat-panel')) {
-        if (e.clientX > window.innerWidth / 2) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
-      }
-    });
 
     // AI Chat Functionality
     const OPENROUTER_API_KEY = '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';
