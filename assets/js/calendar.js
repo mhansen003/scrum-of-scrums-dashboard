@@ -45,15 +45,19 @@ function formatMonthYear(date) {
 }
 
 // Check if a week has data available
-function hasDataForWeek(weekEndingDate) {
-  const weekEndStr = formatDate(weekEndingDate);
-  return availableWeeks.some(week => week.date === weekEndStr);
+function hasDataForWeek(weekStartDate, weekEndDate) {
+  return availableWeeks.some(week => {
+    const weekDate = new Date(week.date);
+    return weekDate >= weekStartDate && weekDate <= weekEndDate;
+  });
 }
 
 // Get week data
-function getWeekData(weekEndingDate) {
-  const weekEndStr = formatDate(weekEndingDate);
-  return availableWeeks.find(week => week.date === weekEndStr);
+function getWeekData(weekStartDate, weekEndDate) {
+  return availableWeeks.find(week => {
+    const weekDate = new Date(week.date);
+    return weekDate >= weekStartDate && weekDate <= weekEndDate;
+  });
 }
 
 // Get all weeks in a month
@@ -110,7 +114,7 @@ function renderCalendar() {
 
   // Render each week
   weeks.forEach(week => {
-    const weekData = getWeekData(week.end);
+    const weekData = getWeekData(week.start, week.end);
     const hasData = weekData !== undefined;
     const isSelected = selectedWeek && weekData && weekData.date === selectedWeek;
     const dateRange = formatDateRange(week.start, week.end);

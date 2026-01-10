@@ -225,6 +225,18 @@
       color: var(--text-primary);
     }
 
+    ul li a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    ul li a:hover {
+      color: var(--accent-teal);
+      border-bottom-color: var(--accent-teal);
+    }
+
     .nav {
       position: fixed;
       bottom: 30px;
@@ -282,6 +294,45 @@
       padding: 0.25rem 0.5rem;
       border-radius: 4px;
       font-family: 'JetBrains Mono', monospace;
+    }
+
+    .nav-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 40px;
+      display: flex;
+      gap: 1rem;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-btn:hover {
+      background: var(--accent-teal);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .nav-btn:disabled:hover {
+      background: var(--accent-blue);
+      transform: none;
     }
 
     .slide.title-slide {
@@ -359,18 +410,8 @@
 
   <div class="presentation">
 
-    <!-- Slide 1: Title -->
-    <div class="slide title-slide active">
-      <div class="slide-content">
-        <div class="label animate">CMG Financial</div>
-        <h1 class="animate delay-1">Scrum of Scrums</h1>
-        <p class="subtitle animate delay-2">Weekly Updates</p>
-        <div class="date-badge animate delay-3">Period Ending 01.09.2026</div>
-      </div>
-    </div>
-
-    <!-- Slide 2: Salesforce Team -->
-    <div class="slide">
+    <!-- Slide 1: Salesforce Team -->
+    <div class="slide active">
       <div class="slide-content">
         <div class="label animate">4-Blocker Org Status</div>
         <h2 class="animate delay-1 text-teal">Salesforce Team</h2>
@@ -383,16 +424,16 @@
 
               <h3>Ready for UAT / UAT</h3>
               <ul>
-                <li>Add "Reason for Default" to the Collections and Loss Mitigation Disposition Codes - <strong>89536</strong></li>
-                <li>Escrow | Escrow Data Mapping Phase 1 - <strong>84574</strong></li>
-                <li>Third Party Authorizations - Data Mapping - <strong>87735</strong></li>
-                <li>Enhancement | FEMA workflow language change - <strong>86885</strong></li>
+                <li>Add "Reason for Default" to the Collections and Loss Mitigation Disposition Codes - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=89536&type=workitem" target="_blank" rel="noopener noreferrer">89536</a></strong></li>
+                <li>Escrow | Escrow Data Mapping Phase 1 - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=84574&type=workitem" target="_blank" rel="noopener noreferrer">84574</a></strong></li>
+                <li>Third Party Authorizations - Data Mapping - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=87735&type=workitem" target="_blank" rel="noopener noreferrer">87735</a></strong></li>
+                <li>Enhancement | FEMA workflow language change - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=86885&type=workitem" target="_blank" rel="noopener noreferrer">86885</a></strong></li>
               </ul>
 
               <h3 style="margin-top: 1rem;">UAT Pass/Resolved</h3>
               <ul>
-                <li>Disposition Error - BUG <strong>91235</strong></li>
-                <li>Add admin bypass to case and voicecall validation rules - <strong>85200</strong></li>
+                <li>Disposition Error - BUG <strong><a href="https://cmgfidev.visualstudio.com/_search?text=91235&type=workitem" target="_blank" rel="noopener noreferrer">91235</a></strong></li>
+                <li>Add admin bypass to case and voicecall validation rules - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=85200&type=workitem" target="_blank" rel="noopener noreferrer">85200</a></strong></li>
               </ul>
             </div>
           </div>
@@ -403,18 +444,18 @@
 
               <h3>Ready for QA / In QA</h3>
               <ul>
-                <li>Enhancement | FEMA Related Fields Displayed on Timeline within Case - <strong>89684</strong></li>
-                <li>PAYMENT | Enhancement | Pay Now uses GetPaymentOptionsDetails to calculate Amount Due - <strong>83056</strong></li>
+                <li>Enhancement | FEMA Related Fields Displayed on Timeline within Case - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=89684&type=workitem" target="_blank" rel="noopener noreferrer">89684</a></strong></li>
+                <li>PAYMENT | Enhancement | Pay Now uses GetPaymentOptionsDetails to calculate Amount Due - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=83056&type=workitem" target="_blank" rel="noopener noreferrer">83056</a></strong></li>
               </ul>
 
               <h3 style="margin-top: 1rem;">In Dev</h3>
               <ul>
-                <li>Outlook Email Integration With Intelligent Loan/Customer Lookup - <strong>89076</strong></li>
-                <li>LoanServ Script | E-Bill Consent | Borrower Updates | APIBORRW - <strong>55318</strong></li>
-                <li>Display Created Date in Timeline Subject for Cases and Tasks on Loan - <strong>91656</strong></li>
-                <li>AG | Display Related Tasks on Case with Stacked Open/Closed View in Aspen Grove Tab - <strong>78791</strong></li>
-                <li>Critical: ODS Sync Dual Bugs - Performance (Stale cutoffDate) + Data Sync Failures (Missing ExLookupId__c) - BUG <strong>92088</strong></li>
-                <li>Payment Management – Unified Manage Payment (Recurring & One-Time) - <strong>90180</strong></li>
+                <li>Outlook Email Integration With Intelligent Loan/Customer Lookup - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=89076&type=workitem" target="_blank" rel="noopener noreferrer">89076</a></strong></li>
+                <li>LoanServ Script | E-Bill Consent | Borrower Updates | APIBORRW - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=55318&type=workitem" target="_blank" rel="noopener noreferrer">55318</a></strong></li>
+                <li>Display Created Date in Timeline Subject for Cases and Tasks on Loan - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=91656&type=workitem" target="_blank" rel="noopener noreferrer">91656</a></strong></li>
+                <li>AG | Display Related Tasks on Case with Stacked Open/Closed View in Aspen Grove Tab - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=78791&type=workitem" target="_blank" rel="noopener noreferrer">78791</a></strong></li>
+                <li>Critical: ODS Sync Dual Bugs - Performance (Stale cutoffDate) + Data Sync Failures (Missing ExLookupId__c) - BUG <strong><a href="https://cmgfidev.visualstudio.com/_search?text=92088&type=workitem" target="_blank" rel="noopener noreferrer">92088</a></strong></li>
+                <li>Payment Management – Unified Manage Payment (Recurring & One-Time) - <strong><a href="https://cmgfidev.visualstudio.com/_search?text=90180&type=workitem" target="_blank" rel="noopener noreferrer">90180</a></strong></li>
               </ul>
             </div>
           </div>
@@ -466,7 +507,7 @@
 
               <h3 style="margin-top: 1rem;">Closed</h3>
               <ul>
-                <li>User Story <strong>90297</strong>: DOCS | Borrower Portal Docs Needs Review Status - Enable Send to LOS Action</li>
+                <li>User Story <strong><a href="https://cmgfidev.visualstudio.com/_search?text=90297&type=workitem" target="_blank" rel="noopener noreferrer">90297</a></strong>: DOCS | Borrower Portal Docs Needs Review Status - Enable Send to LOS Action</li>
               </ul>
             </div>
           </div>
@@ -704,32 +745,32 @@
           <div class="section-box">
             <div class="section-title">Blockers and Work Arounds</div>
             <ul>
-              <li><strong>Ticket 85234</strong> - Home Portal | Workflow - Borrower Auth Doc Request
+              <li><strong>Ticket <a href="https://cmgfidev.visualstudio.com/_search?text=85234&type=workitem" target="_blank" rel="noopener noreferrer">85234</a></strong> - Home Portal | Workflow - Borrower Auth Doc Request
                 <ul style="margin-top: 0.5rem;">
                   <li style="font-size: 0.9rem;">Blocking due to needed updates in Byte UAT are not available yet.</li>
                 </ul>
               </li>
-              <li><strong>Ticket 80135</strong> - Servicing | Contact Information | Error while removing Email on servicing account
+              <li><strong>Ticket <a href="https://cmgfidev.visualstudio.com/_search?text=80135&type=workitem" target="_blank" rel="noopener noreferrer">80135</a></strong> - Servicing | Contact Information | Error while removing Email on servicing account
                 <ul style="margin-top: 0.5rem;">
                   <li style="font-size: 0.9rem;">Team Panda is handling the final piece to enable clearing email from account. Timeline to be defined with Panda team.</li>
                 </ul>
               </li>
-              <li><strong>Ticket 78540</strong> - Partner Co-Branding MVP | Admin Portal Partner User Details
+              <li><strong>Ticket <a href="https://cmgfidev.visualstudio.com/_search?text=78540&type=workitem" target="_blank" rel="noopener noreferrer">78540</a></strong> - Partner Co-Branding MVP | Admin Portal Partner User Details
                 <ul style="margin-top: 0.5rem;">
                   <li style="font-size: 0.9rem;">Pending additional fields being added by Dennis</li>
                 </ul>
               </li>
-              <li><strong>Ticket 78544</strong> - Partner Co-Branding MVP | Admin Portal Partner Reset Authenticators
+              <li><strong>Ticket <a href="https://cmgfidev.visualstudio.com/_search?text=78544&type=workitem" target="_blank" rel="noopener noreferrer">78544</a></strong> - Partner Co-Branding MVP | Admin Portal Partner Reset Authenticators
                 <ul style="margin-top: 0.5rem;">
                   <li style="font-size: 0.9rem;">The reset authenticators button does not enable after 2FA has been enabled. Waiting for the fix from Dennis to proceed.</li>
                 </ul>
               </li>
-              <li><strong>Ticket 78541</strong> - Partner Co-Branding MVP | Admin Portal Partner Unlock Account
+              <li><strong>Ticket <a href="https://cmgfidev.visualstudio.com/_search?text=78541&type=workitem" target="_blank" rel="noopener noreferrer">78541</a></strong> - Partner Co-Branding MVP | Admin Portal Partner Unlock Account
                 <ul style="margin-top: 0.5rem;">
                   <li style="font-size: 0.9rem;">Pending to update the Portal API endpoint api/v1/external/partner/{GUID} to retrieve status directly from Okta</li>
                 </ul>
               </li>
-              <li><strong>Ticket 87921</strong> - Home Portal | Tasks - Completing Remote Online Closing Task does not move it to Completed
+              <li><strong>Ticket <a href="https://cmgfidev.visualstudio.com/_search?text=87921&type=workitem" target="_blank" rel="noopener noreferrer">87921</a></strong> - Home Portal | Tasks - Completing Remote Online Closing Task does not move it to Completed
                 <ul style="margin-top: 0.5rem;">
                   <li style="font-size: 0.9rem;">Custom field not being available in production. Until that field is present, the team cannot fix the associated bug</li>
                 </ul>
@@ -812,10 +853,10 @@
 
               <h3>Hold for UAT (QA tested, to be deployed on UAT asap)</h3>
               <ul>
-                <li><strong>91503</strong> User Story Servicing Docs: Change Classification and Intake Background Services to Function AppsConsumer</li>
-                <li><strong>91228</strong> User Story BE - Extract required Metadata from Vendor filenames</li>
-                <li><strong>89397</strong> User Story BE - AI / Servicing Docs / Integration | Create VendorConfiguration entity and repository for vendor-specific settings</li>
-                <li><strong>89396</strong> User Story BE - AI / Servicing Docs / Integration | Create migration for Vendors configurations</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=91503&type=workitem" target="_blank" rel="noopener noreferrer">91503</a></strong> User Story Servicing Docs: Change Classification and Intake Background Services to Function AppsConsumer</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=91228&type=workitem" target="_blank" rel="noopener noreferrer">91228</a></strong> User Story BE - Extract required Metadata from Vendor filenames</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=89397&type=workitem" target="_blank" rel="noopener noreferrer">89397</a></strong> User Story BE - AI / Servicing Docs / Integration | Create VendorConfiguration entity and repository for vendor-specific settings</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=89396&type=workitem" target="_blank" rel="noopener noreferrer">89396</a></strong> User Story BE - AI / Servicing Docs / Integration | Create migration for Vendors configurations</li>
               </ul>
             </div>
           </div>
@@ -826,12 +867,12 @@
 
               <h3>QA + Development</h3>
               <ul>
-                <li><strong>87869</strong> User Story AI / Servicing Docs / Integration | Servicing Docs: Send documents for classification</li>
-                <li><strong>87872</strong> User Story BE - AI / Servicing Docs / Integration | Servicing Docs: Update document onboarding endpoint</li>
-                <li><strong>87870</strong> User Story AI / Servicing Docs / Integration | Servicing Docs: Receive and process classification results</li>
-                <li><strong>89395</strong> User Story BE + QA - AI / Servicing Docs / Integration | Implement background worker to consume vendor event queue</li>
-                <li><strong>91229</strong> User Story BE + QA - Apply fields to the Consumer</li>
-                <li><strong>92011</strong> User Story BE + QA - Add endpoint to Common Services API to return doc types visible to borrowers</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=87869&type=workitem" target="_blank" rel="noopener noreferrer">87869</a></strong> User Story AI / Servicing Docs / Integration | Servicing Docs: Send documents for classification</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=87872&type=workitem" target="_blank" rel="noopener noreferrer">87872</a></strong> User Story BE - AI / Servicing Docs / Integration | Servicing Docs: Update document onboarding endpoint</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=87870&type=workitem" target="_blank" rel="noopener noreferrer">87870</a></strong> User Story AI / Servicing Docs / Integration | Servicing Docs: Receive and process classification results</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=89395&type=workitem" target="_blank" rel="noopener noreferrer">89395</a></strong> User Story BE + QA - AI / Servicing Docs / Integration | Implement background worker to consume vendor event queue</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=91229&type=workitem" target="_blank" rel="noopener noreferrer">91229</a></strong> User Story BE + QA - Apply fields to the Consumer</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=92011&type=workitem" target="_blank" rel="noopener noreferrer">92011</a></strong> User Story BE + QA - Add endpoint to Common Services API to return doc types visible to borrowers</li>
               </ul>
             </div>
           </div>
@@ -865,8 +906,8 @@
 
               <h3>Ready to be Released</h3>
               <ul>
-                <li><strong>77835</strong> User Story OG - Add a Health Check for ClientServices API</li>
-                <li><strong>90641</strong> User Story OG - POST Case - Allow AccountNumber and BorrowerSSNHash to Be Nullable (Change Order #2)</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=77835&type=workitem" target="_blank" rel="noopener noreferrer">77835</a></strong> User Story OG - Add a Health Check for ClientServices API</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=90641&type=workitem" target="_blank" rel="noopener noreferrer">90641</a></strong> User Story OG - POST Case - Allow AccountNumber and BorrowerSSNHash to Be Nullable (Change Order #2)</li>
               </ul>
             </div>
           </div>
@@ -877,27 +918,27 @@
 
               <h3>Development / QA (Partial List)</h3>
               <ul style="font-size: 0.85rem;">
-                <li><strong>77974</strong> Add a health check for the Sagent API and also for the external connections</li>
-                <li><strong>71342</strong> AP - BE - Implement Configuration Get Functionality for V2V Admin Panel</li>
-                <li><strong>71334</strong> AP - BE - Setup Authentication</li>
-                <li><strong>71337</strong> AP - Coordinate with DevOps - Analysis and Setup for AdminPortal infrastructure</li>
-                <li><strong>86270</strong> DS - Bankruptcy Cash Reversal Script - APIABKPR</li>
-                <li><strong>86717</strong> DS - Bankruptcy Repayment Plans Script - APIABKRP</li>
-                <li><strong>86395</strong> DS - BE - Implement Dynamic Script Routing Endpoint (APICUSTM)</li>
-                <li><strong>86295</strong> DS - Cash Post Repayment Plans - APICPSRP [NEW]</li>
-                <li><strong>79078</strong> DS - Enhance Detection and Alerting for FATAL System Errors</li>
-                <li><strong>91477</strong> DS - Implement V2 for endpoints (APIAEACD, APIBORRW, APISCIRP)</li>
-                <li><strong>91195</strong> DS - MI Removal Eligibility - APIAMIRE [Change Order #1]</li>
-                <li><strong>86294</strong> DS - Post Single Cash Script - APICPSNG [NEW]</li>
-                <li><strong>77975</strong> DS - Review and enhance error logs</li>
-                <li><strong>86266</strong> DS - V2 - Activate Informal Repayment Plan (Salesforce Post IRP) - APISPIRP [Change Order #1]</li>
-                <li><strong>89195</strong> DS - V2 - Escrow Analysis What If - APIABDEA → APIABDEN [Change Order #1]</li>
-                <li><strong>89566</strong> OG - GET Third Parties [Change Order #1]</li>
-                <li><strong>91798</strong> V2V - AOM - Daily Event Order Status from NTC to AG + RR [Change Order #2]</li>
-                <li><strong>91795</strong> V2V - AOM - Daily New Order from AG to NTC + RR [Change Order #1]</li>
-                <li><strong>90960</strong> V2V - Transfer 400.020 Escrow Analysis Statement Formats from Sagent Qal8 (Client Testing) to AG + RR</li>
-                <li><strong>90959</strong> V2V - Transfer 400.661 Mortgage Loan Billing File from Sagent Qal8 (Client Testing) to AG + RR</li>
-                <li><strong>92346</strong> Bug V2V Database pipeline error</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=77974&type=workitem" target="_blank" rel="noopener noreferrer">77974</a></strong> Add a health check for the Sagent API and also for the external connections</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=71342&type=workitem" target="_blank" rel="noopener noreferrer">71342</a></strong> AP - BE - Implement Configuration Get Functionality for V2V Admin Panel</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=71334&type=workitem" target="_blank" rel="noopener noreferrer">71334</a></strong> AP - BE - Setup Authentication</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=71337&type=workitem" target="_blank" rel="noopener noreferrer">71337</a></strong> AP - Coordinate with DevOps - Analysis and Setup for AdminPortal infrastructure</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=86270&type=workitem" target="_blank" rel="noopener noreferrer">86270</a></strong> DS - Bankruptcy Cash Reversal Script - APIABKPR</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=86717&type=workitem" target="_blank" rel="noopener noreferrer">86717</a></strong> DS - Bankruptcy Repayment Plans Script - APIABKRP</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=86395&type=workitem" target="_blank" rel="noopener noreferrer">86395</a></strong> DS - BE - Implement Dynamic Script Routing Endpoint (APICUSTM)</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=86295&type=workitem" target="_blank" rel="noopener noreferrer">86295</a></strong> DS - Cash Post Repayment Plans - APICPSRP [NEW]</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=79078&type=workitem" target="_blank" rel="noopener noreferrer">79078</a></strong> DS - Enhance Detection and Alerting for FATAL System Errors</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=91477&type=workitem" target="_blank" rel="noopener noreferrer">91477</a></strong> DS - Implement V2 for endpoints (APIAEACD, APIBORRW, APISCIRP)</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=91195&type=workitem" target="_blank" rel="noopener noreferrer">91195</a></strong> DS - MI Removal Eligibility - APIAMIRE [Change Order #1]</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=86294&type=workitem" target="_blank" rel="noopener noreferrer">86294</a></strong> DS - Post Single Cash Script - APICPSNG [NEW]</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=77975&type=workitem" target="_blank" rel="noopener noreferrer">77975</a></strong> DS - Review and enhance error logs</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=86266&type=workitem" target="_blank" rel="noopener noreferrer">86266</a></strong> DS - V2 - Activate Informal Repayment Plan (Salesforce Post IRP) - APISPIRP [Change Order #1]</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=89195&type=workitem" target="_blank" rel="noopener noreferrer">89195</a></strong> DS - V2 - Escrow Analysis What If - APIABDEA → APIABDEN [Change Order #1]</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=89566&type=workitem" target="_blank" rel="noopener noreferrer">89566</a></strong> OG - GET Third Parties [Change Order #1]</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=91798&type=workitem" target="_blank" rel="noopener noreferrer">91798</a></strong> V2V - AOM - Daily Event Order Status from NTC to AG + RR [Change Order #2]</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=91795&type=workitem" target="_blank" rel="noopener noreferrer">91795</a></strong> V2V - AOM - Daily New Order from AG to NTC + RR [Change Order #1]</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=90960&type=workitem" target="_blank" rel="noopener noreferrer">90960</a></strong> V2V - Transfer 400.020 Escrow Analysis Statement Formats from Sagent Qal8 (Client Testing) to AG + RR</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=90959&type=workitem" target="_blank" rel="noopener noreferrer">90959</a></strong> V2V - Transfer 400.661 Mortgage Loan Billing File from Sagent Qal8 (Client Testing) to AG + RR</li>
+                <li><strong><a href="https://cmgfidev.visualstudio.com/_search?text=92346&type=workitem" target="_blank" rel="noopener noreferrer">92346</a></strong> Bug V2V Database pipeline error</li>
               </ul>
             </div>
           </div>
@@ -923,9 +964,14 @@
   <div class="nav">
     <div class="nav-dots" id="navDots"></div>
   </div>
-  <div class="slide-number" id="slideNumber">1 / 10</div>
+  <div class="slide-number" id="slideNumber">1 / 9</div>
   <div class="keyboard-hint">
     <span class="key">←</span><span class="key">→</span> or <span class="key">Space</span> to navigate
+  </div>
+
+  <div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Previous</button>
+    <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next →</button>
   </div>
 
   <script>
@@ -950,6 +996,10 @@
         dot.classList.toggle('active', i === currentSlide);
       });
       slideNumber.textContent = `${currentSlide + 1} / ${slides.length}`;
+
+      // Update button states
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').disabled = currentSlide === slides.length - 1;
     }
 
     function nextSlide() {

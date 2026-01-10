@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scrum of Scrums - Period Ending 09.02.2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0f1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2234;
+      --accent-blue: #3b82f6;
+      --accent-teal: #14b8a6;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(255,255,255,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .presentation {
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      padding: 60px 80px;
+      background: var(--bg-primary);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(20, 184, 166, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .text-blue { color: var(--accent-blue); }
+    .text-teal { color: var(--accent-teal); }
+    .text-amber { color: var(--accent-amber); }
+    .text-rose { color: var(--accent-rose); }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .card h3 {
+      color: var(--text-primary);
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card p {
+      font-size: 1rem;
+    }
+
+    .section-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent-teal);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 0.75rem;
+    }
+
+    ul li {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.95rem;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+    }
+
+    ul li strong {
+      color: var(--text-primary);
+    }
+
+    ul li a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    ul li a:hover {
+      color: var(--accent-teal);
+      border-bottom-color: var(--accent-teal);
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 100;
+    }
+
+    .nav-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-dot.active {
+      background: var(--accent-blue);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .slide-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      position: fixed;
+      bottom: 30px;
+      right: 40px;
+    }
+
+    .keyboard-hint {
+      position: fixed;
+      bottom: 30px;
+      left: 40px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .key {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .nav-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 40px;
+      display: flex;
+      gap: 1rem;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-btn:hover {
+      background: var(--accent-teal);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .nav-btn:disabled:hover {
+      background: var(--accent-blue);
+      transform: none;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 30px;
+      left: 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+
+    .back-button:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border-color: var(--accent-blue);
+    }
+
+    .team-lead {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide.active .animate {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .slide.active .animate.delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .slide.active .animate.delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .slide.active .animate.delay-3 { animation-delay: 0.3s; opacity: 0; }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back-button">
+    <span>←</span> Back to Overview
+  </a>
+
+  <div class="presentation">
+
+    <!-- Slide 1: Team Lisa - Origination -->
+    <div class="slide active">
+      <div class="slide-content">
+        <div class="label animate">4-Blocker Org Status</div>
+        <h2 class="animate delay-1 text-teal">Team Lisa (Enterprise Test Team) Origination</h2>
+        <p class="team-lead animate delay-2">Jonathan Sandoval</p>
+
+        <div class="grid-2 animate delay-3">
+          <div>
+            <div class="section-box">
+              <div class="section-title">Accomplishments Last Period</div>
+
+              <h3>Automated Regression Tests</h3>
+              <ul>
+                <li><strong>Scenario Pricing 2.0</strong> - Multiple test cases (75301, 75296, 75285, 75294, 75289, 75292, 75291, 75298, 75286, 75278, 75288, 75280, 75284, 75275, 75303)</li>
+                <li>Wholesale and CORR Pre-Release Testing</li>
+                <li>Parties Login and Console Error Test Updates</li>
+                <li>Sandbox Login and Console Error Test Updates</li>
+                <li>CLEAR BNL Test Case Add a Borrower to An Existing App</li>
+                <li>CLEAR BNL Multiple Borrowers</li>
+                <li>CLEAR BNL to Docs E2E Happy Path Test</li>
+                <li>CLEAR BNL Secure Web Page Definition</li>
+                <li>CCW Smart Fees Regression</li>
+                <li>Pest Inspection Tests - Running Smart Fees</li>
+                <li>CCW Pest Inspection Logging</li>
+                <li>CCW 1.6 | Serv Prov Part 4 | Req #01 and #3</li>
+                <li>Closing Cost Pest Inspection</li>
+                <li>EPS API End Point Discovery and Test Plan</li>
+                <li>Smart App (75332, 75333, 75334, 75331, 75330)</li>
+                <li>Create IT IIS Performance Load/Stress Test Plan</li>
+                <li>New Azure DEV API End Point Discovery and Test Plan</li>
+                <li>Add New Users to CLEAR Repo and Encrypt Passwords</li>
+                <li>URLA New Employee and Income Page Update</li>
+                <li>URLA1003 and BNL Test Updates</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-box">
+              <div class="section-title">Goals This Period / Next Period</div>
+
+              <h3>Goals Next Sprint (Origination)</h3>
+              <ul>
+                <li>CLEAR Add Application Required Fields</li>
+                <li>Clarity Chatbot: Add Button to the Navbar</li>
+                <li>URLA REO | Enhanced Address Auto-Fill Feature for REO Flyout</li>
+                <li>Opportunity Pipeline 2.0 MVP | Enrichment Panel | Add Data Enrichment Panel</li>
+                <li>Clear | Retire Clear 1 Admin page iframe | User Profile Settings tab</li>
+                <li>Opportunity Pipeline 2.0 MVP | Add Dynamic Marketing Button for Non-LO Profiles</li>
+                <li>Scenario Pricing 2.0 (76449, 76451, 76439, 76445, 76448, 76623)</li>
+                <li>Sandbox 2.0 (76621, 76684, 76618)</li>
+                <li>Clear | Sales: Spanish speaking docs option</li>
+                <li>Self Disclosure Flyout | Update validation for Anti-Steering</li>
+                <li>CLEAR URLA Refactor (Initial Research / URLA Borrower / URLA Loan / URLA Income / URLA Property Tab / URLA Assets & Liabilities / URLA Cash To/From / URLA Declarations)</li>
+                <li>CCW 1.6 | Serv Prov Part 4 | Req #01 #03 CCW Milestones: Change Rules for Pest Inspection Service</li>
+                <li>CX Smart App (75329, 76536, 76537)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div class="section-box">
+            <div class="section-title">Blockers and Work Arounds</div>
+            <ul>
+              <li>Cloud Dev Performance Load Testing - Able to authenticate but now BLOCKED waiting for Stakeholder sign-off</li>
+              <li>Create IT IIS Performance Load/Stress Test Plan BLOCKED</li>
+            </ul>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Critical Risks and Mitigations</div>
+            <p style="color: var(--text-muted); font-style: italic;">N/A</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Team Lisa - Servicing -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="label animate">4-Blocker Org Status</div>
+        <h2 class="animate delay-1 text-teal">Team Lisa (Enterprise Test Team) Servicing</h2>
+        <p class="team-lead animate delay-2">Jonathan Sandoval</p>
+
+        <div class="grid-2 animate delay-3">
+          <div>
+            <div class="section-box">
+              <div class="section-title">Accomplishments Last Period</div>
+
+              <h3>Automated Regression Tests (Servicing)</h3>
+              <ul>
+                <li>Bulk Script Upload Landing Page Update</li>
+                <li>Servicing Bulk Script Upload Login Page</li>
+                <li>Servicing Docs API Script Updates</li>
+                <li>Servicing Docs Pipeline</li>
+                <li>Servicing Docs UI New UI DocTypes</li>
+                <li>Servicing Docs UI Performance</li>
+              </ul>
+
+              <h3 style="margin-top: 1rem;">Goals</h3>
+              <ul>
+                <li>Test Case Definitions</li>
+                <li>Payment Processing Test Case Definitions</li>
+                <li>Servicing Docs DEV UI Initial Page Definitions, Login and arc</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-box">
+              <div class="section-title">Goals This Period / Next Period</div>
+
+              <h3>Goals Next Sprint (Servicing)</h3>
+              <ul>
+                <li>CX Home Borrower Portal Initial Project Setup</li>
+                <li>CX Home Borrower Portal DashBoard</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div class="section-box">
+            <div class="section-title">Blockers and Work Arounds</div>
+            <p style="color: var(--text-muted); font-style: italic;">N/A</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Critical Risks and Mitigations</div>
+            <p style="color: var(--text-muted); font-style: italic;">N/A</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Team Jeff -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="label animate">4-Blocker Org Status</div>
+        <h2 class="animate delay-1 text-teal">Team Jeff</h2>
+        <p class="team-lead animate delay-2">Jonathan Sandoval</p>
+
+        <div class="section-box animate delay-3">
+          <div class="section-title">Sprint 43 Progress - Team Jeff Status</div>
+          <ul>
+            <li>Continue working on the scripts (6 in development, 2 in QA)</li>
+            <li><strong>Script Stories:</strong> 4 user stories in UAT and 2 user stories ready for release (15 Closed)</li>
+            <li>Supporting the Go Live, no issues reported at the moment</li>
+            <li><strong>Bulk Script Upload</strong> has been deployed in production</li>
+          </ul>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div class="section-box">
+            <div class="section-title">Blockers and Work Arounds</div>
+            <p style="color: var(--text-muted); font-style: italic;">No blockers reported</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Critical Risks and Mitigations</div>
+            <p style="color: var(--text-muted); font-style: italic;">No critical risks reported</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Team Arches & Zion -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="label animate">4-Blocker Org Status</div>
+        <h2 class="animate delay-1 text-teal">Team Arches & Zion</h2>
+        <p class="team-lead animate delay-2">Rafael Souza</p>
+
+        <div class="grid-2 animate delay-3">
+          <div>
+            <div class="section-box">
+              <div class="section-title">Accomplishments Last Period</div>
+              <ul>
+                <li><strong>Closed Loan Initiative</strong> - Successfully completed</li>
+                <li><strong>Admin Page</strong> - Delivered</li>
+                <li><strong>VA Information | Clear 2 Revamp</strong> - Completed</li>
+                <li><strong>Opportunity Pipeline 2.0 MVP</strong> - Delivered</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-box">
+              <div class="section-title">Goals This Period / Next Period</div>
+              <ul>
+                <li><strong>Partners Portal</strong> - Scoping and refining</li>
+                <li><strong>Opportunity Pipeline</strong> - Integrate with Salesforce (Marketing Automation opt-in + Offer Transaction History)</li>
+                <li><strong>Clear | Daily Rate Sheet iFrame Retirement</strong> - Continue development</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div class="section-box">
+            <div class="section-title">Blockers and Work Arounds</div>
+            <p>Opportunity Pipeline blockers to be resolved by Sep 5th</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Critical Risks and Mitigations</div>
+            <p style="color: var(--text-muted); font-style: italic;">N/A</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Team Badlands -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="label animate">4-Blocker Org Status</div>
+        <h2 class="animate delay-1 text-teal">Team Badlands</h2>
+        <p class="team-lead animate delay-2">Carolina Barreto</p>
+
+        <div class="grid-2 animate delay-3">
+          <div>
+            <div class="section-box">
+              <div class="section-title">Accomplishments Last Period</div>
+              <ul>
+                <li>Sandbox Loan | MVP 1 | 02 | Create & Open</li>
+                <li>Sandbox 2.0 | 03 | Multiple Sandbox Loans</li>
+                <li>Sandbox 2.0 | 04 | Create & Open</li>
+                <li>Sandbox 2.0 | 05 | Menu Items & Banner Messages</li>
+                <li>Sandbox 2.0 | 08 | AUS Snapshots & Diffs</li>
+                <li>Parties Updates</li>
+                <li>CCW 1.6 | Intake 1101, 1119 | Select Service Provider Workflow Improvements Part 4</li>
+                <li>FHA AUS Type, LPA & SoftCheck | Feature Flag Removal</li>
+                <li>CCW 1.6 | Support | Update Appraisal Product Lookup</li>
+                <li>Scenario Pricing 2.0 | 1D Best Pricing</li>
+                <li>Scenario Pricing 2.0 | 1F Compare</li>
+                <li>Scenario Pricing 2.0 | 1C BestX MI</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-box">
+              <div class="section-title">Goals This Period / Next Period</div>
+              <ul>
+                <li>Sandbox 2.0 | 08 | AUS Snapshots & Diffs</li>
+                <li>NFTY Door HELOC | Clear 2 Integration</li>
+                <li>CLEAR - Loan Origination (Sales)</li>
+                <li>Clear Mobile MVP | Phase 4 | URLA Page Responsiveness TBD</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div class="section-box">
+            <div class="section-title">Blockers and Work Arounds</div>
+            <p style="color: var(--text-muted); font-style: italic;">N/A</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Critical Risks and Mitigations</div>
+            <p>QA Automation tool - still waiting on security review</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Team Yosemite -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="label animate">4-Blocker Org Status</div>
+        <h2 class="animate delay-1 text-teal">Team Yosemite</h2>
+        <p class="team-lead animate delay-2">Rafael Souza</p>
+
+        <div class="grid-2 animate delay-3">
+          <div>
+            <div class="section-box">
+              <div class="section-title">Accomplishments Last Period</div>
+              <ul>
+                <li><strong>BNL</strong>
+                  <ul style="margin-top: 0.5rem;">
+                    <li style="font-size: 0.9rem;">Bugs and Defects</li>
+                    <li style="font-size: 0.9rem;">AI usage to generate individual BNL item</li>
+                  </ul>
+                </li>
+                <li><strong>Rules Engine</strong>
+                  <ul style="margin-top: 0.5rem;">
+                    <li style="font-size: 0.9rem;">Edit and create prioritized rules</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-box">
+              <div class="section-title">Goals This Period / Next Period</div>
+              <ul>
+                <li>Salesforce API agent</li>
+                <li>MDM: Additional Features</li>
+                <li><strong>Conditions 1.0</strong>
+                  <ul style="margin-top: 0.5rem;">
+                    <li style="font-size: 0.9rem;">Prioritized defects</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div class="section-box">
+            <div class="section-title">Blockers and Work Arounds</div>
+            <p style="color: var(--text-muted); font-style: italic;">N/A</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Critical Risks and Mitigations</div>
+            <p>Team is aligning to have coverage for QA demands on the team while the official replacement isn't defined.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7: Team Hema -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="label animate">4-Blocker Org Status</div>
+        <h2 class="animate delay-1 text-teal">Team Hema</h2>
+        <p class="team-lead animate delay-2">Laís Duarte</p>
+
+        <div class="grid-2 animate delay-3">
+          <div>
+            <div class="section-box">
+              <div class="section-title">Accomplishments Last Period</div>
+
+              <h3>Ready for UAT</h3>
+              <ul>
+                <li>DOCS | Borrower Document Request Email - Update Subject Line</li>
+                <li>Clear Docs - When I select the doc type: Miscellaneous I'm able to click on the + icon without filling a description</li>
+              </ul>
+
+              <h3 style="margin-top: 1rem;">Hold for UAT</h3>
+              <ul>
+                <li>DOCS | Pending Docs - CLEAR Menu - Application Requests Not Displaying Borrower(s)</li>
+              </ul>
+
+              <h3 style="margin-top: 1rem;">QA in Progress</h3>
+              <ul>
+                <li>Clear Docs | Documents Not Visible After Selection (Draft and Final)</li>
+                <li>CLEAR DOCS - When I click on "Edit Auto reminders" and I click on the back arrow at the top of the page the pop up window reminds displayed until I click on Close or the X</li>
+              </ul>
+
+              <h3 style="margin-top: 1rem;">Ready for QA</h3>
+              <ul>
+                <li>CLEAR DOCS - When I click on "Edit Auto reminders" and I click on the back arrow at the top of the page the pop up window reminds displayed until I click on Close or the X</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-box">
+              <div class="section-title">Goals This Period / Next Period</div>
+              <p>In the next sprint, we will have some servicing items, and we have already slotted them for the next sprint:</p>
+              <ul>
+                <li>Servicing Docs | Renaming Docs - Doc History - Phase 2 Capture Reason for DocType Name Change</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div class="section-box">
+            <div class="section-title">Blockers and Work Arounds</div>
+            <p style="color: var(--text-muted); font-style: italic;">N/A</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Critical Risks and Mitigations</div>
+            <p style="color: var(--text-muted); font-style: italic;">N/A</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: Team MCO -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="label animate">4-Blocker Org Status</div>
+        <h2 class="animate delay-1 text-teal">Team Manufacturing Cost Optimization (MCO)</h2>
+        <p class="team-lead animate delay-2">Laís Duarte</p>
+
+        <div class="grid-2 animate delay-3">
+          <div>
+            <div class="section-box">
+              <div class="section-title">Accomplishments Last Period</div>
+
+              <h3>Automation</h3>
+              <ul>
+                <li>Retail Order Out - Migrate Stored Proc to DOMO</li>
+                <li>Automation | Disclosures: Send ARM Disclosure to Borrower</li>
+                <li>Automation | Server Patches</li>
+                <li>SPIKE/Bug: ROO volume low since XACTUS sunset Credit Plus</li>
+                <li>Automation | Flood Notice remove 'Error' filter from SQL query</li>
+              </ul>
+
+              <h3 style="margin-top: 1rem;">AI POC</h3>
+              <ul>
+                <li>Meeting Recorder Enhancements</li>
+                <li>Extraction of Required Columns from Mortgage Loan PDFs</li>
+                <li>UI Development for Agency Loan Tool (CMG Scenario Desk Tools)</li>
+                <li>AIO Simulator Tool- CSV Analysis</li>
+                <li>Loan application Assistant Update</li>
+                <li>Automation | Sales: Condo Property Information agentic tool (Summit priority #7) B/E</li>
+              </ul>
+
+              <h3 style="margin-top: 1rem;">OCR</h3>
+              <ul>
+                <li>The team has been working on the Docs Support and Ephesoft Servicing related items for Doc Rename</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-box">
+              <div class="section-title">Goals This Period / Next Period</div>
+              <ul>
+                <li>We'll have a discussion next Tuesday to understand whether the business is bringing more items to Automation and if there will be any new items coming to the AI POC team</li>
+                <li>Servicing ORC</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div class="section-box">
+            <div class="section-title">Blockers and Work Arounds</div>
+            <p>Note: Some items are still undergoing testing for better monitoring and to determine whether additional requirements are needed before they go into production.</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Critical Risks and Mitigations</div>
+            <p style="color: var(--text-muted); font-style: italic;">No critical risks reported</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9: CX Team -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="label animate">4-Blocker Org Status</div>
+        <h2 class="animate delay-1 text-teal">CX Team</h2>
+        <p class="team-lead animate delay-2">Isadora Barros Braz</p>
+
+        <div class="grid-2 animate delay-3">
+          <div>
+            <div class="section-box">
+              <div class="section-title">Accomplishments Last Period</div>
+              <ul>
+                <li><strong>Completed Sprint 2025.08.27</strong></li>
+                <li>Kudos to the CX Team for successfully <strong>increasing their original commitment by nearly 50%</strong> to accommodate Servicing prioritization tasks introduced during the sprint, particularly the Aspen Grove Widget Updates</li>
+                <li>Sprint original commitment: <strong>88 SP</strong></li>
+                <li>Additional Servicing prioritization work added after sprint started: <strong>41.5 SP</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-box">
+              <div class="section-title">Goals This Period / Next Period</div>
+              <ul>
+                <li><strong>Conduct Sprint 2025.09.17</strong></li>
+                <li>This sprint is intentionally planned with a low commitment to maintain flexibility for anticipated hot fixes and production deployments, particularly in support of the ongoing Servicing project and integration with external teams like Aspen Grove</li>
+                <li>There is an expectation for additional work to be added as new issues and requirements may emerge during the onboarding of users onto the new Servicing platform</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div class="section-box">
+            <div class="section-title">Blockers and Work Arounds</div>
+            <ul>
+              <li><strong>Ticket <a href="https://cmgfidev.visualstudio.com/_search?text=40544&type=workitem" target="_blank" rel="noopener noreferrer">40544</a></strong> - Tech Debt | Setup SendGrid with SSL certs and update all SmartApp/Home Portal transactional email links to use HTTPS
+                <ul style="margin-top: 0.5rem;">
+                  <li style="font-size: 0.9rem;">DevOps team needs to update the proxy for the URLs to use our proxy. Sendgrid is waiting on Aaron and Andy to complete this task and CX will unblock the ticket</li>
+                  <li style="font-size: 0.9rem;">09/02 note: I'm waiting to reach out again to the DevOps team requesting an update because they are dedicated on support the Servicing team</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Critical Risks and Mitigations</div>
+            <p>The sprint on 2025.09.17 remains focused on supporting the Servicing project, which could potentially delay the delivery of the prioritized CX initiatives.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav">
+    <div class="nav-dots" id="navDots"></div>
+  </div>
+  <div class="slide-number" id="slideNumber">1 / 9</div>
+  <div class="keyboard-hint">
+    <span class="key">←</span><span class="key">→</span> or <span class="key">Space</span> to navigate
+  </div>
+
+  <div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Previous</button>
+    <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next →</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const navDots = document.getElementById('navDots');
+    const slideNumber = document.getElementById('slideNumber');
+    let currentSlide = 0;
+
+    // Create nav dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goToSlide(i));
+      navDots.appendChild(dot);
+    });
+
+    function updateSlide() {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentSlide);
+      });
+      document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+      });
+      slideNumber.textContent = `${currentSlide + 1} / ${slides.length}`;
+
+      // Update button states
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').disabled = currentSlide === slides.length - 1;
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlide();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+    document.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? nextSlide() : prevSlide();
+      }
+    });
+
+    // Click to advance (except on interactive elements)
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav, .nav-dot, a, button, .back-button')) {
+        if (e.clientX > window.innerWidth / 2) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    });
+  </script>
+</body>
+</html>

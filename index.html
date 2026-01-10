@@ -48,8 +48,49 @@
       z-index: 0;
     }
 
+    /* Loading Overlay */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--border-subtle);
+      border-top-color: var(--accent-teal);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      margin-top: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
     .container {
-      max-width: 1400px;
+      max-width: 1600px;
       margin: 0 auto;
       position: relative;
       z-index: 1;
@@ -90,7 +131,7 @@
 
     .reports-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: 2rem;
       margin-top: 40px;
     }
@@ -133,46 +174,46 @@
 
     .report-date {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--accent-blue);
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       font-weight: 500;
     }
 
     .report-title {
-      font-size: 1.75rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       line-height: 1.2;
     }
 
     .report-meta {
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: var(--text-secondary);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .report-stats {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      margin-top: 1.5rem;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
     }
 
     .stat-box {
       background: var(--bg-secondary);
-      padding: 0.75rem;
+      padding: 0.65rem;
       border-radius: 8px;
       border: 1px solid var(--border-subtle);
     }
 
     .stat-number {
-      font-size: 1.5rem;
+      font-size: 1.35rem;
       font-weight: 700;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
     .stat-number.blue { color: var(--accent-blue); }
@@ -181,7 +222,7 @@
     .stat-number.rose { color: var(--accent-rose); }
 
     .stat-label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -193,8 +234,8 @@
       gap: 0.5rem;
       color: var(--accent-teal);
       font-weight: 600;
-      margin-top: 1rem;
-      font-size: 0.95rem;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
       transition: gap 0.3s ease;
     }
 
@@ -236,13 +277,16 @@
       opacity: 0;
     }
 
-    .report-tile:nth-child(1) { animation-delay: 0.1s; }
-    .report-tile:nth-child(2) { animation-delay: 0.2s; }
-    .report-tile:nth-child(3) { animation-delay: 0.3s; }
-    .report-tile:nth-child(4) { animation-delay: 0.4s; }
+    .report-tile:nth-child(n) { animation-delay: calc(0.05s * var(--i)); }
   </style>
 </head>
 <body>
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading reports...</div>
+  </div>
+
   <div class="container">
     <header>
       <div class="label">CMG Financial</div>
@@ -251,118 +295,174 @@
     </header>
 
     <div class="reports-grid">
-      <!-- Jan 9, 2026 Report -->
-      <a href="./weeks/2026-01-09.html" class="report-tile">
+      <!-- Jan 9, 2026 -->
+      <a href="./weeks/2026-01-09.html" class="report-tile" style="--i: 1">
         <div class="report-date">Period Ending</div>
         <h2 class="report-title">January 9, 2026</h2>
         <p class="report-meta">Latest Report • 9 Teams</p>
         <div class="report-stats">
-          <div class="stat-box">
-            <div class="stat-number blue">68</div>
-            <div class="stat-label">Accomplishments</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number teal">87</div>
-            <div class="stat-label">Goals</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number amber">14</div>
-            <div class="stat-label">Blockers</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number rose">6</div>
-            <div class="stat-label">Risks</div>
-          </div>
+          <div class="stat-box"><div class="stat-number blue">68</div><div class="stat-label">Accomplishments</div></div>
+          <div class="stat-box"><div class="stat-number teal">87</div><div class="stat-label">Goals</div></div>
+          <div class="stat-box"><div class="stat-number amber">14</div><div class="stat-label">Blockers</div></div>
+          <div class="stat-box"><div class="stat-number rose">6</div><div class="stat-label">Risks</div></div>
         </div>
-        <div class="view-report">
-          View Full Report <span class="arrow">→</span>
-        </div>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
       </a>
 
-      <!-- Dec 29, 2025 Report -->
-      <a href="./weeks/2025-12-29.html" class="report-tile">
+      <!-- Dec 29, 2025 -->
+      <a href="./weeks/2025-12-29.html" class="report-tile" style="--i: 2">
         <div class="report-date">Period Ending</div>
         <h2 class="report-title">December 29, 2025</h2>
         <p class="report-meta">9 Teams</p>
         <div class="report-stats">
-          <div class="stat-box">
-            <div class="stat-number blue">41</div>
-            <div class="stat-label">Accomplishments</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number teal">63</div>
-            <div class="stat-label">Goals</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number amber">8</div>
-            <div class="stat-label">Blockers</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number rose">5</div>
-            <div class="stat-label">Risks</div>
-          </div>
+          <div class="stat-box"><div class="stat-number blue">41</div><div class="stat-label">Accomplishments</div></div>
+          <div class="stat-box"><div class="stat-number teal">63</div><div class="stat-label">Goals</div></div>
+          <div class="stat-box"><div class="stat-number amber">8</div><div class="stat-label">Blockers</div></div>
+          <div class="stat-box"><div class="stat-number rose">5</div><div class="stat-label">Risks</div></div>
         </div>
-        <div class="view-report">
-          View Full Report <span class="arrow">→</span>
-        </div>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
       </a>
 
-      <!-- Dec 8, 2025 Report -->
-      <a href="./weeks/2025-12-08.html" class="report-tile">
+      <!-- Dec 8, 2025 -->
+      <a href="./weeks/2025-12-08.html" class="report-tile" style="--i: 3">
         <div class="report-date">Period Ending</div>
         <h2 class="report-title">December 8, 2025</h2>
         <p class="report-meta">9 Teams</p>
         <div class="report-stats">
-          <div class="stat-box">
-            <div class="stat-number blue">90</div>
-            <div class="stat-label">Accomplishments</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number teal">65</div>
-            <div class="stat-label">Goals</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number amber">10</div>
-            <div class="stat-label">Blockers</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number rose">5</div>
-            <div class="stat-label">Risks</div>
-          </div>
+          <div class="stat-box"><div class="stat-number blue">90</div><div class="stat-label">Accomplishments</div></div>
+          <div class="stat-box"><div class="stat-number teal">65</div><div class="stat-label">Goals</div></div>
+          <div class="stat-box"><div class="stat-number amber">10</div><div class="stat-label">Blockers</div></div>
+          <div class="stat-box"><div class="stat-number rose">5</div><div class="stat-label">Risks</div></div>
         </div>
-        <div class="view-report">
-          View Full Report <span class="arrow">→</span>
-        </div>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
       </a>
 
-      <!-- Nov 24, 2025 Report -->
-      <a href="./weeks/2025-11-24.html" class="report-tile">
+      <!-- Nov 24, 2025 -->
+      <a href="./weeks/2025-11-24.html" class="report-tile" style="--i: 4">
         <div class="report-date">Period Ending</div>
         <h2 class="report-title">November 24, 2025</h2>
         <p class="report-meta">9 Teams</p>
         <div class="report-stats">
-          <div class="stat-box">
-            <div class="stat-number blue">90</div>
-            <div class="stat-label">Accomplishments</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number teal">79</div>
-            <div class="stat-label">Goals</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number amber">7</div>
-            <div class="stat-label">Blockers</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-number rose">5</div>
-            <div class="stat-label">Risks</div>
-          </div>
+          <div class="stat-box"><div class="stat-number blue">90</div><div class="stat-label">Accomplishments</div></div>
+          <div class="stat-box"><div class="stat-number teal">79</div><div class="stat-label">Goals</div></div>
+          <div class="stat-box"><div class="stat-number amber">7</div><div class="stat-label">Blockers</div></div>
+          <div class="stat-box"><div class="stat-number rose">5</div><div class="stat-label">Risks</div></div>
         </div>
-        <div class="view-report">
-          View Full Report <span class="arrow">→</span>
-        </div>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Nov 17, 2025 -->
+      <a href="./weeks/2025-11-17.html" class="report-tile" style="--i: 5">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">November 17, 2025</h2>
+        <p class="report-meta">8 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Nov 3, 2025 -->
+      <a href="./weeks/2025-11-03.html" class="report-tile" style="--i: 6">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">November 3, 2025</h2>
+        <p class="report-meta">9 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Oct 27, 2025 -->
+      <a href="./weeks/2025-10-27.html" class="report-tile" style="--i: 7">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">October 27, 2025</h2>
+        <p class="report-meta">9 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Oct 20, 2025 -->
+      <a href="./weeks/2025-10-20.html" class="report-tile" style="--i: 8">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">October 20, 2025</h2>
+        <p class="report-meta">11 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Oct 13, 2025 -->
+      <a href="./weeks/2025-10-13.html" class="report-tile" style="--i: 9">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">October 13, 2025</h2>
+        <p class="report-meta">9 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Oct 6, 2025 -->
+      <a href="./weeks/2025-10-06.html" class="report-tile" style="--i: 10">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">October 6, 2025</h2>
+        <p class="report-meta">10 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Sep 29, 2025 -->
+      <a href="./weeks/2025-09-29.html" class="report-tile" style="--i: 11">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">September 29, 2025</h2>
+        <p class="report-meta">10 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Sep 22, 2025 -->
+      <a href="./weeks/2025-09-22.html" class="report-tile" style="--i: 12">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">September 22, 2025</h2>
+        <p class="report-meta">9 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Sep 15, 2025 -->
+      <a href="./weeks/2025-09-15.html" class="report-tile" style="--i: 13">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">September 15, 2025</h2>
+        <p class="report-meta">11 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Sep 8, 2025 -->
+      <a href="./weeks/2025-09-08.html" class="report-tile" style="--i: 14">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">September 8, 2025</h2>
+        <p class="report-meta">9 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Sep 2, 2025 -->
+      <a href="./weeks/2025-09-02.html" class="report-tile" style="--i: 15">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">September 2, 2025</h2>
+        <p class="report-meta">9 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
+      </a>
+
+      <!-- Aug 25, 2025 -->
+      <a href="./weeks/2025-08-25.html" class="report-tile" style="--i: 16">
+        <div class="report-date">Period Ending</div>
+        <h2 class="report-title">August 25, 2025</h2>
+        <p class="report-meta">12 Teams</p>
+        <div class="view-report">View Full Report <span class="arrow">→</span></div>
       </a>
     </div>
   </div>
+
+  <script>
+    // Hide loading overlay after page load
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('loadingOverlay').classList.add('hidden');
+      }, 500);
+    });
+
+    // Show loading when clicking report tiles
+    document.querySelectorAll('.report-tile').forEach(tile => {
+      tile.addEventListener('click', function(e) {
+        document.getElementById('loadingOverlay').classList.remove('hidden');
+      });
+    });
+  </script>
 </body>
 </html>
