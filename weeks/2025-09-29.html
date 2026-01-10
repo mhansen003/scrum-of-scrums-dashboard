@@ -48,7 +48,7 @@
       height: 100%;
       display: none;
       flex-direction: column;
-      padding: 60px 80px;
+      padding: 160px 80px 60px 80px;
       background: var(--bg-primary);
       opacity: 0;
       transition: opacity 0.4s ease;
@@ -103,6 +103,63 @@
       color: var(--accent-blue);
       border-color: var(--accent-blue);
       transform: translateX(-4px);
+    }
+
+    /* Team Navigation Tabs */
+    .team-tabs {
+      position: fixed;
+      top: 90px;
+      left: 40px;
+      right: 40px;
+      z-index: 150;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-teal) var(--bg-card);
+    }
+
+    .team-tabs::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .team-tabs::-webkit-scrollbar-track {
+      background: var(--bg-card);
+      border-radius: 3px;
+    }
+
+    .team-tabs::-webkit-scrollbar-thumb {
+      background: var(--accent-teal);
+      border-radius: 3px;
+    }
+
+    .team-tab {
+      flex-shrink: 0;
+      padding: 0.5rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .team-tab:hover {
+      border-color: var(--accent-teal);
+      color: var(--text-primary);
+    }
+
+    .team-tab.active {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+      border-color: transparent;
+      color: white;
     }
 
     h1 {
@@ -347,6 +404,19 @@
 </head>
 <body>
   <a href="../index.html" class="back-link">← Back to Dashboard</a>
+
+  <div class="team-tabs">
+    <div class="team-tab active" onclick="goToSlide(0)">Lisa Origination</div>
+    <div class="team-tab" onclick="goToSlide(1)">Arches & Zion</div>
+    <div class="team-tab" onclick="goToSlide(2)">Badlands</div>
+    <div class="team-tab" onclick="goToSlide(3)">Yosemite</div>
+    <div class="team-tab" onclick="goToSlide(4)">Hema</div>
+    <div class="team-tab" onclick="goToSlide(5)">MCO</div>
+    <div class="team-tab" onclick="goToSlide(6)">CX</div>
+    <div class="team-tab" onclick="goToSlide(7)">MX</div>
+    <div class="team-tab" onclick="goToSlide(8)">Capybara</div>
+    <div class="team-tab" onclick="goToSlide(9)">Panda</div>
+  </div>
 
   <div class="presentation">
 
@@ -982,6 +1052,10 @@
       });
       document.querySelectorAll('.nav-dot').forEach((dot, i) => {
         dot.classList.toggle('active', i === currentSlide);
+      });
+      // Update team tabs
+      document.querySelectorAll('.team-tab').forEach((tab, i) => {
+        tab.classList.toggle('active', i === currentSlide);
       });
       slideNumber.textContent = `${currentSlide + 1} / ${slides.length}`;
 
