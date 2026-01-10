@@ -1463,7 +1463,6 @@
     }
 
     // AI Chat Functionality
-    const OPENROUTER_API_KEY = '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';
     const chatMessages = document.getElementById('chatMessages');
     const chatInput = document.getElementById('chatInput');
     const chatSend = document.getElementById('chatSend');
@@ -1552,16 +1551,13 @@ ${slidesData}`;
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
       try {
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        const response = await fetch('/api/chat', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-            'Content-Type': 'application/json',
-            'HTTP-Referer': window.location.href,
-            'X-Title': 'Scrum of Scrums Dashboard'
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            model: 'anthropic/claude-3.5-sonnet',
+            model: 'openai/gpt-3.5-turbo',
             messages: [
               {
                 role: 'system',

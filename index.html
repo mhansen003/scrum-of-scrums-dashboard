@@ -659,7 +659,6 @@
     });
 
     // AI Search Functionality
-    const OPENROUTER_API_KEY = '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';
     const searchInput = document.getElementById('searchInput');
     const searchButton = document.getElementById('searchButton');
     const searchResults = document.getElementById('searchResults');
@@ -710,13 +709,10 @@
       `;
 
       try {
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        const response = await fetch('/api/chat', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-            'Content-Type': 'application/json',
-            'HTTP-Referer': 'https://scrum-of-scrums-dashboard.vercel.app',
-            'X-Title': 'Scrum of Scrums Dashboard'
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             model: 'openai/gpt-3.5-turbo',
