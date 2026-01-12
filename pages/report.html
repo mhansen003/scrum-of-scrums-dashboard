@@ -31,12 +31,15 @@
       background: var(--bg-primary);
       color: var(--text-primary);
       min-height: 100vh;
-      padding: 40px 20px;
+      padding: 0;
+      overflow-x: hidden;
     }
 
     .container {
-      max-width: 1400px;
-      margin: 0 auto;
+      max-width: 100%;
+      margin: 0;
+      padding: 40px;
+      min-height: 100vh;
     }
 
     .loading {
@@ -61,7 +64,7 @@
 
     header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
       padding-bottom: 2rem;
       border-bottom: 1px solid var(--border-subtle);
     }
@@ -81,114 +84,6 @@
       color: var(--text-secondary);
     }
 
-    .team-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .team-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .team-name {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--accent-blue);
-    }
-
-    .team-lead {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      margin-top: 0.5rem;
-    }
-
-    .section {
-      margin-bottom: 2rem;
-    }
-
-    .section-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .section-title.accomplishments { color: var(--accent-blue); }
-    .section-title.goals { color: var(--accent-teal); }
-    .section-title.blockers { color: var(--accent-amber); }
-    .section-title.risks { color: var(--accent-rose); }
-
-    .subsection {
-      margin-bottom: 1rem;
-    }
-
-    .subsection-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .item {
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-      display: flex;
-      align-items: start;
-      gap: 0.75rem;
-    }
-
-    .item:last-child {
-      border-bottom: none;
-    }
-
-    .item-bullet {
-      color: var(--accent-teal);
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .item-content {
-      flex: 1;
-    }
-
-    .item-description {
-      color: var(--text-primary);
-      line-height: 1.6;
-    }
-
-    .item-ticket {
-      margin-top: 0.25rem;
-    }
-
-    .ticket-link {
-      color: var(--accent-blue);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .ticket-link:hover {
-      text-decoration: underline;
-    }
-
-    .empty {
-      color: var(--text-muted);
-      font-style: italic;
-      padding: 1rem 0;
-    }
-
     .back-link {
       display: inline-block;
       margin-bottom: 2rem;
@@ -201,9 +96,218 @@
       text-decoration: underline;
     }
 
+    /* Team Navigation Tabs */
+    .team-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .team-tab {
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .team-tab:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
+
+    .team-tab.active {
+      background: var(--accent-teal);
+      border-color: var(--accent-teal);
+      color: white;
+    }
+
+    /* Team Slide */
+    .team-slide {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .team-slide.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .team-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .team-name {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .team-lead {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      margin-bottom: 2.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .section-title.accomplishments { color: var(--accent-blue); }
+    .section-title.goals { color: var(--accent-teal); }
+    .section-title.blockers { color: var(--accent-amber); }
+    .section-title.risks { color: var(--accent-rose); }
+
+    .subsection {
+      margin-bottom: 1.5rem;
+    }
+
+    .subsection:last-child {
+      margin-bottom: 0;
+    }
+
+    .subsection-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent-teal);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .item {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      display: flex;
+      align-items: start;
+      gap: 1rem;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+    }
+
+    .item-bullet {
+      color: var(--accent-teal);
+      font-weight: 700;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .item-content {
+      flex: 1;
+    }
+
+    .item-description {
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .item-ticket {
+      margin-top: 0.5rem;
+    }
+
+    .ticket-link {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-family: 'JetBrains Mono', monospace;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .ticket-link:hover {
+      text-decoration: underline;
+    }
+
+    .empty {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    /* Navigation Controls */
+    .nav-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .nav-btn {
+      padding: 1rem 2rem;
+      background: var(--accent-teal);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-btn:hover {
+      background: #0d9488;
+      transform: translateY(-2px);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .progress {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
     @media (max-width: 768px) {
-      body {
-        padding: 20px 15px;
+      .container {
+        padding: 20px;
       }
 
       h1 {
@@ -211,11 +315,24 @@
       }
 
       .team-name {
-        font-size: 1.4rem;
+        font-size: 1.8rem;
       }
 
-      .team-card {
+      .team-tabs {
+        gap: 0.25rem;
+      }
+
+      .team-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .section {
         padding: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 1.2rem;
       }
     }
   </style>
@@ -233,8 +350,10 @@
   </div>
 
   <script>
+    let reportData = null;
+    let currentTeamIndex = 0;
+
     async function loadReport() {
-      // Get date from URL parameter
       const urlParams = new URLSearchParams(window.location.search);
       const date = urlParams.get('date');
 
@@ -250,8 +369,8 @@
           throw new Error('Report not found');
         }
 
-        const report = await response.json();
-        renderReport(report);
+        reportData = await response.json();
+        renderReport();
 
       } catch (error) {
         console.error('Error loading report:', error);
@@ -269,35 +388,72 @@
       document.title = 'Error - Scrum of Scrums';
     }
 
-    function renderReport(report) {
-      const date = new Date(report.periodEndDate);
+    function renderReport() {
+      const date = new Date(reportData.periodEndDate);
       const formattedDate = date.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
       });
 
-      document.title = report.title;
+      document.title = reportData.title;
 
       let html = `
         <header>
           <h1>Scrum of Scrums</h1>
           <p class="subtitle">Period Ending ${formattedDate}</p>
         </header>
+
+        <!-- Team Navigation Tabs -->
+        <div class="team-tabs" id="teamTabs"></div>
+
+        <!-- Team Slides -->
+        <div id="teamSlides"></div>
+
+        <!-- Navigation Controls -->
+        <div class="nav-controls">
+          <button class="nav-btn" id="prevBtn" onclick="previousTeam()">
+            ← Previous Team
+          </button>
+          <div class="progress" id="progress"></div>
+          <button class="nav-btn" id="nextBtn" onclick="nextTeam()">
+            Next Team →
+          </button>
+        </div>
       `;
 
-      // Group items by section for accomplishments and goals
-      report.reportTeams.forEach((reportTeam, index) => {
+      document.getElementById('content').innerHTML = html;
+
+      // Render team tabs
+      renderTeamTabs();
+
+      // Render all team slides
+      renderTeamSlides();
+
+      // Show first team
+      showTeam(0);
+    }
+
+    function renderTeamTabs() {
+      const tabsHtml = reportData.reportTeams.map((rt, index) => `
+        <div class="team-tab ${index === 0 ? 'active' : ''}" onclick="showTeam(${index})">
+          ${rt.team.name}
+        </div>
+      `).join('');
+
+      document.getElementById('teamTabs').innerHTML = tabsHtml;
+    }
+
+    function renderTeamSlides() {
+      const slidesHtml = reportData.reportTeams.map((reportTeam, index) => {
         const team = reportTeam.team;
         const lead = reportTeam.teamLead;
 
-        html += `
-          <div class="team-card">
+        return `
+          <div class="team-slide ${index === 0 ? 'active' : ''}" id="team-${index}">
             <div class="team-header">
-              <div>
-                <div class="team-name">${team.name}</div>
-                <div class="team-lead">Team Lead: ${lead.name}</div>
-              </div>
+              <div class="team-name">${team.name}</div>
+              <div class="team-lead">Team Lead: ${lead.name}</div>
             </div>
 
             <!-- Accomplishments -->
@@ -305,7 +461,7 @@
               <div class="section-title accomplishments">
                 ✓ Accomplishments Last Period
               </div>
-              ${renderGroupedItems(reportTeam.accomplishments, 'accomplishments')}
+              ${renderGroupedItems(reportTeam.accomplishments)}
             </div>
 
             <!-- Goals -->
@@ -313,7 +469,7 @@
               <div class="section-title goals">
                 🎯 Goals This Period
               </div>
-              ${renderGroupedItems(reportTeam.goals, 'goals')}
+              ${renderGroupedItems(reportTeam.goals)}
             </div>
 
             <!-- Blockers -->
@@ -333,12 +489,12 @@
             </div>
           </div>
         `;
-      });
+      }).join('');
 
-      document.getElementById('content').innerHTML = html;
+      document.getElementById('teamSlides').innerHTML = slidesHtml;
     }
 
-    function renderGroupedItems(items, type) {
+    function renderGroupedItems(items) {
       if (items.length === 0) {
         return '<div class="empty">No items reported</div>';
       }
@@ -365,7 +521,9 @@
                   <div class="item-description">${escapeHtml(item.description)}</div>
                   ${item.ticketUrl ? `
                     <div class="item-ticket">
-                      <a href="${item.ticketUrl}" class="ticket-link" target="_blank">${item.ticketId}</a>
+                      <a href="${item.ticketUrl}" class="ticket-link" target="_blank">
+                        🔗 ${item.ticketId}
+                      </a>
                     </div>
                   ` : ''}
                 </div>
@@ -390,13 +548,63 @@
             <div class="item-description">${escapeHtml(item.description)}</div>
             ${item.ticketUrl ? `
               <div class="item-ticket">
-                <a href="${item.ticketUrl}" class="ticket-link" target="_blank">${item.ticketId}</a>
+                <a href="${item.ticketUrl}" class="ticket-link" target="_blank">
+                  🔗 ${item.ticketId}
+                </a>
               </div>
             ` : ''}
           </div>
         </div>
       `).join('');
     }
+
+    function showTeam(index) {
+      currentTeamIndex = index;
+
+      // Update tabs
+      document.querySelectorAll('.team-tab').forEach((tab, i) => {
+        tab.classList.toggle('active', i === index);
+      });
+
+      // Update slides
+      document.querySelectorAll('.team-slide').forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+
+      // Update navigation buttons
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const progress = document.getElementById('progress');
+
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === reportData.reportTeams.length - 1;
+
+      progress.textContent = `Team ${index + 1} of ${reportData.reportTeams.length}`;
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function previousTeam() {
+      if (currentTeamIndex > 0) {
+        showTeam(currentTeamIndex - 1);
+      }
+    }
+
+    function nextTeam() {
+      if (currentTeamIndex < reportData.reportTeams.length - 1) {
+        showTeam(currentTeamIndex + 1);
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        previousTeam();
+      } else if (e.key === 'ArrowRight') {
+        nextTeam();
+      }
+    });
 
     function escapeHtml(text) {
       const div = document.createElement('div');
