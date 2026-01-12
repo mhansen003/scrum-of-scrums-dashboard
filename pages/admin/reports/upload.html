@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Transcript - Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0f1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2234;
+      --accent-blue: #3b82f6;
+      --accent-teal: #14b8a6;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-green: #10b981;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(255,255,255,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-indicator {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      opacity: 0.5;
+    }
+
+    .step.active {
+      opacity: 1;
+      border-color: var(--accent-teal);
+      background: rgba(20, 184, 166, 0.1);
+    }
+
+    .step.completed {
+      opacity: 1;
+      border-color: var(--accent-green);
+    }
+
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      display: none;
+    }
+
+    .form-card.active {
+      display: block;
+    }
+
+    .upload-area {
+      border: 2px dashed var(--border-subtle);
+      border-radius: 12px;
+      padding: 3rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 1.5rem;
+    }
+
+    .upload-area:hover {
+      border-color: var(--accent-teal);
+      background: rgba(20, 184, 166, 0.05);
+    }
+
+    .upload-area.dragover {
+      border-color: var(--accent-teal);
+      background: rgba(20, 184, 166, 0.1);
+    }
+
+    textarea {
+      width: 100%;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      min-height: 300px;
+      resize: vertical;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-teal);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0d9488;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--border-subtle);
+      border-top-color: var(--accent-teal);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .team-preview {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .team-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .team-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    input[type="date"],
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+
+    .mapping-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .info-box {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent-blue);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📝 Upload Transcript</h1>
+      <p style="color: var(--text-secondary);">Use AI to automatically create a report from a meeting transcript</p>
+    </header>
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step active" id="step1Indicator">
+        <span>1️⃣</span>
+        <span>Upload Transcript</span>
+      </div>
+      <div class="step" id="step2Indicator">
+        <span>2️⃣</span>
+        <span>Review & Map Teams</span>
+      </div>
+      <div class="step" id="step3Indicator">
+        <span>3️⃣</span>
+        <span>Set Date & Save</span>
+      </div>
+    </div>
+
+    <!-- Step 1: Upload Transcript -->
+    <div class="form-card active" id="step1">
+      <h2 style="margin-bottom: 1.5rem; font-size: 1.3rem;">Step 1: Upload Transcript</h2>
+
+      <div class="info-box">
+        💡 <strong>Tip:</strong> Paste your meeting transcript below. The AI will automatically extract teams, accomplishments, goals, blockers, and risks.
+      </div>
+
+      <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+        <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">📄 Drop a file here or click to browse</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Supports .txt, .md, .doc, .docx files</p>
+        <input type="file" id="fileInput" accept=".txt,.md,.doc,.docx" style="display: none;" onchange="handleFileUpload(event)">
+      </div>
+
+      <label>Or paste transcript text:</label>
+      <textarea id="transcriptText" placeholder="Paste your Scrum of Scrums meeting transcript here...
+
+Example format:
+Team Alpha - Lead: John Smith
+Accomplishments:
+- Completed user authentication feature (ticket: 12345)
+- Fixed payment gateway bug
+
+Goals:
+- Implement dashboard analytics
+- Deploy to staging environment
+
+Blockers:
+- Waiting for API keys from security team
+
+Risks:
+- Database migration may cause downtime
+
+Team Beta - Lead: Jane Doe
+..."></textarea>
+
+      <div class="form-actions">
+        <a href="../index.html" class="btn btn-secondary">Cancel</a>
+        <button class="btn btn-primary" onclick="parseTranscript()" id="parseBtn">
+          Parse with AI →
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Review & Map Teams -->
+    <div class="form-card" id="step2">
+      <h2 style="margin-bottom: 1.5rem; font-size: 1.3rem;">Step 2: Review & Map Teams</h2>
+
+      <div class="info-box">
+        💡 <strong>Review:</strong> Check the AI-extracted data below and map team/lead names to existing database entries.
+      </div>
+
+      <div id="teamsPreview"></div>
+
+      <div class="form-actions">
+        <button class="btn btn-secondary" onclick="goToStep(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(3)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Set Date & Save -->
+    <div class="form-card" id="step3">
+      <h2 style="margin-bottom: 1.5rem; font-size: 1.3rem;">Step 3: Set Date & Save</h2>
+
+      <div class="form-group">
+        <label for="periodEndDate">Period End Date *</label>
+        <input type="date" id="periodEndDate" required>
+      </div>
+
+      <div class="form-group">
+        <label for="title">Report Title *</label>
+        <input type="text" id="title" placeholder="e.g., Scrum of Scrums - Period Ending 01.16.2026" required>
+      </div>
+
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input type="checkbox" id="published">
+          <label for="published" style="margin: 0;">Publish immediately</label>
+        </div>
+      </div>
+
+      <div id="summaryPreview" style="background: var(--bg-secondary); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0;">
+        <!-- Summary will be inserted here -->
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-secondary" onclick="goToStep(2)">← Back</button>
+        <button class="btn btn-primary" onclick="saveReport()" id="saveBtn">
+          💾 Create Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let parsedData = null;
+    let teamsList = [];
+    let leadsList = [];
+    let teamMappings = {};
+    let leadMappings = {};
+
+    // Load teams and leads for mapping
+    async function loadDropdownData() {
+      try {
+        const [teamsRes, leadsRes] = await Promise.all([
+          fetch('/api/teams'),
+          fetch('/api/team-leads')
+        ]);
+
+        if (teamsRes.ok && leadsRes.ok) {
+          teamsList = await teamsRes.json();
+          leadsList = await leadsRes.json();
+        }
+      } catch (error) {
+        console.error('Error loading dropdown data:', error);
+      }
+    }
+
+    // Handle file upload
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('transcriptText').value = e.target.result;
+      };
+      reader.readAsText(file);
+    }
+
+    // Drag and drop
+    const uploadArea = document.getElementById('uploadArea');
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          document.getElementById('transcriptText').value = ev.target.result;
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    async function parseTranscript() {
+      const transcript = document.getElementById('transcriptText').value.trim();
+
+      if (!transcript) {
+        alert('Please paste or upload a transcript first.');
+        return;
+      }
+
+      const parseBtn = document.getElementById('parseBtn');
+      parseBtn.disabled = true;
+      parseBtn.innerHTML = '<div class="spinner" style="width: 20px; height: 20px; border-width: 2px; margin: 0;"></div> Parsing...';
+
+      try {
+        const response = await fetch('/api/admin/parse-transcript', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ transcript })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Failed to parse transcript');
+        }
+
+        parsedData = await response.json();
+
+        // Initialize mappings
+        parsedData.teams.forEach((team, index) => {
+          teamMappings[index] = findBestMatch(team.teamName, teamsList, 'name');
+          leadMappings[index] = findBestMatch(team.teamLead, leadsList, 'name');
+        });
+
+        renderTeamPreviews();
+        goToStep(2);
+
+      } catch (error) {
+        console.error('Error parsing transcript:', error);
+        alert('Error: ' + error.message);
+      } finally {
+        parseBtn.disabled = false;
+        parseBtn.innerHTML = 'Parse with AI →';
+      }
+    }
+
+    function findBestMatch(name, list, field) {
+      const normalizedName = name.toLowerCase().trim();
+      const exact = list.find(item => item[field].toLowerCase().trim() === normalizedName);
+      if (exact) return exact.id;
+
+      const partial = list.find(item =>
+        item[field].toLowerCase().includes(normalizedName) ||
+        normalizedName.includes(item[field].toLowerCase())
+      );
+      if (partial) return partial.id;
+
+      return '';
+    }
+
+    function renderTeamPreviews() {
+      const container = document.getElementById('teamsPreview');
+
+      container.innerHTML = parsedData.teams.map((team, index) => `
+        <div class="team-preview">
+          <div class="team-header">
+            <div>
+              <div class="team-name">${team.teamName}</div>
+              <div style="color: var(--text-secondary); margin-top: 0.25rem;">Lead: ${team.teamLead}</div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat">
+                <div class="stat-number" style="color: var(--accent-blue);">${team.accomplishments.length}</div>
+                <div class="stat-label">Accomplishments</div>
+              </div>
+              <div class="stat">
+                <div class="stat-number" style="color: var(--accent-teal);">${team.goals.length}</div>
+                <div class="stat-label">Goals</div>
+              </div>
+              <div class="stat">
+                <div class="stat-number" style="color: var(--accent-amber);">${team.blockers.length}</div>
+                <div class="stat-label">Blockers</div>
+              </div>
+              <div class="stat">
+                <div class="stat-number" style="color: var(--accent-rose);">${team.risks.length}</div>
+                <div class="stat-label">Risks</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mapping-row">
+            <div>
+              <label>Map to Team:</label>
+              <select onchange="teamMappings[${index}] = this.value">
+                <option value="">-- Create New Team --</option>
+                ${teamsList.map(t => `
+                  <option value="${t.id}" ${teamMappings[index] == t.id ? 'selected' : ''}>${t.name}</option>
+                `).join('')}
+              </select>
+            </div>
+            <div>
+              <label>Map to Team Lead:</label>
+              <select onchange="leadMappings[${index}] = this.value">
+                <option value="">-- Create New Lead --</option>
+                ${leadsList.map(l => `
+                  <option value="${l.id}" ${leadMappings[index] == l.id ? 'selected' : ''}>${l.name}</option>
+                `).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function goToStep(step) {
+      // Update indicators
+      document.getElementById('step1Indicator').classList.toggle('active', step === 1);
+      document.getElementById('step1Indicator').classList.toggle('completed', step > 1);
+
+      document.getElementById('step2Indicator').classList.toggle('active', step === 2);
+      document.getElementById('step2Indicator').classList.toggle('completed', step > 2);
+
+      document.getElementById('step3Indicator').classList.toggle('active', step === 3);
+
+      // Show/hide cards
+      document.getElementById('step1').classList.toggle('active', step === 1);
+      document.getElementById('step2').classList.toggle('active', step === 2);
+      document.getElementById('step3').classList.toggle('active', step === 3);
+
+      if (step === 3) {
+        renderSummary();
+      }
+    }
+
+    function renderSummary() {
+      const totalAccomplishments = parsedData.teams.reduce((sum, t) => sum + t.accomplishments.length, 0);
+      const totalGoals = parsedData.teams.reduce((sum, t) => sum + t.goals.length, 0);
+      const totalBlockers = parsedData.teams.reduce((sum, t) => sum + t.blockers.length, 0);
+      const totalRisks = parsedData.teams.reduce((sum, t) => sum + t.risks.length, 0);
+
+      document.getElementById('summaryPreview').innerHTML = `
+        <h3 style="margin-bottom: 1rem;">Report Summary</h3>
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="stat-number" style="color: var(--accent-blue);">${parsedData.teams.length}</div>
+            <div class="stat-label">Teams</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" style="color: var(--accent-blue);">${totalAccomplishments}</div>
+            <div class="stat-label">Accomplishments</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" style="color: var(--accent-teal);">${totalGoals}</div>
+            <div class="stat-label">Goals</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" style="color: var(--accent-amber);">${totalBlockers}</div>
+            <div class="stat-label">Blockers</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" style="color: var(--accent-rose);">${totalRisks}</div>
+            <div class="stat-label">Risks</div>
+          </div>
+        </div>
+      `;
+    }
+
+    async function saveReport() {
+      const periodEndDate = document.getElementById('periodEndDate').value;
+      const title = document.getElementById('title').value;
+      const published = document.getElementById('published').checked;
+
+      if (!periodEndDate || !title) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      const saveBtn = document.getElementById('saveBtn');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<div class="spinner" style="width: 20px; height: 20px; border-width: 2px; margin: 0;"></div> Saving...';
+
+      try {
+        // Prepare teams data
+        const teamsData = await Promise.all(parsedData.teams.map(async (team, index) => {
+          let teamId = teamMappings[index] ? parseInt(teamMappings[index]) : null;
+          let teamLeadId = leadMappings[index] ? parseInt(leadMappings[index]) : null;
+
+          // Create new team if not mapped
+          if (!teamId) {
+            const teamRes = await fetch('/api/teams', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name: team.teamName,
+                slug: team.teamName.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+              })
+            });
+            if (teamRes.ok) {
+              const newTeam = await teamRes.json();
+              teamId = newTeam.id;
+            }
+          }
+
+          // Create new lead if not mapped
+          if (!teamLeadId) {
+            const leadRes = await fetch('/api/team-leads', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name: team.teamLead })
+            });
+            if (leadRes.ok) {
+              const newLead = await leadRes.json();
+              teamLeadId = newLead.id;
+            }
+          }
+
+          return {
+            teamId,
+            teamLeadId,
+            accomplishments: team.accomplishments.map(item => ({
+              sectionName: item.section || 'General',
+              description: item.description,
+              ticketId: item.ticketId || null,
+              ticketUrl: item.ticketId ? `https://cmgfidev.visualstudio.com/_search?text=${item.ticketId}&type=workitem` : null
+            })),
+            goals: team.goals.map(item => ({
+              sectionName: item.section || 'General',
+              description: item.description,
+              ticketId: item.ticketId || null,
+              ticketUrl: item.ticketId ? `https://cmgfidev.visualstudio.com/_search?text=${item.ticketId}&type=workitem` : null
+            })),
+            blockers: team.blockers.map(item => ({
+              description: item.description,
+              ticketId: item.ticketId || null,
+              ticketUrl: item.ticketId ? `https://cmgfidev.visualstudio.com/_search?text=${item.ticketId}&type=workitem` : null,
+              workaround: null
+            })),
+            risks: team.risks.map(item => ({
+              description: item.description,
+              mitigation: null,
+              severity: item.severity || 'medium'
+            }))
+          };
+        }));
+
+        // Create report
+        const response = await fetch('/api/admin/reports', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            periodEndDate,
+            title,
+            published,
+            teams: teamsData
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Failed to create report');
+        }
+
+        alert('✅ Report created successfully from transcript!');
+        window.location.href = '../index.html';
+
+      } catch (error) {
+        console.error('Error saving report:', error);
+        alert('Error: ' + error.message);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '💾 Create Report';
+      }
+    }
+
+    // Auto-generate title from date
+    document.getElementById('periodEndDate').addEventListener('change', function() {
+      const date = new Date(this.value);
+      const formatted = date.toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric'
+      }).replace(/\//g, '.');
+      document.getElementById('title').value = `Scrum of Scrums - Period Ending ${formatted}`;
+    });
+
+    // Load dropdown data on page load
+    loadDropdownData();
+  </script>
+</body>
+</html>
