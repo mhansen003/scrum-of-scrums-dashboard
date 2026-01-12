@@ -305,6 +305,8 @@
                   day: 'numeric'
                 });
 
+                const reportDateStr = date.toISOString().split('T')[0];
+
                 return `
                   <tr>
                     <td class="date">${dateStr}</td>
@@ -325,6 +327,7 @@
                     </td>
                     <td>
                       <div class="actions">
+                        <a href="../../pages/report.html?date=${reportDateStr}" target="_blank" class="btn btn-primary btn-sm">View</a>
                         <a href="./reports/edit.html?id=${report.id}" class="btn btn-secondary btn-sm">Edit</a>
                         <button onclick="deleteReport(${report.id})" class="btn btn-danger btn-sm">Delete</button>
                       </div>

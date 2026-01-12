@@ -502,6 +502,20 @@
       const title = document.getElementById('title').value;
       const published = document.getElementById('published').checked;
 
+      // Validate we have teams
+      if (teams.length === 0) {
+        alert('Please add at least one team');
+        return;
+      }
+
+      // Validate team data
+      for (let team of teams) {
+        if (!team.teamId || !team.teamLeadId) {
+          alert('Please select a team and team lead for all teams');
+          return;
+        }
+      }
+
       // Prepare teams data
       const teamsData = teams.map(team => ({
         teamId: parseInt(team.teamId),
@@ -531,6 +545,14 @@
         }))
       }));
 
+      const payload = {
+        periodEndDate,
+        title,
+        published,
+        teams: teamsData
+      };
+
+      console.log('Submitting report:', payload);
       document.getElementById('loading').classList.add('show');
 
       try {
@@ -539,17 +561,14 @@
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            periodEndDate,
-            title,
-            published,
-            teams: teamsData
-          })
+          body: JSON.stringify(payload)
         });
 
+        const responseData = await response.json();
+        console.log('Response:', responseData);
+
         if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || 'Failed to create report');
+          throw new Error(responseData.error || 'Failed to create report');
         }
 
         alert('Report created successfully!');
