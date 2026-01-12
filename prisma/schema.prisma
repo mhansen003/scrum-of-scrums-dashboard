@@ -132,3 +132,17 @@ model Risk {
   @@index([reportTeamId])
   @@map("risks")
 }
+
+model User {
+  id          Int       @id @default(autoincrement())
+  email       String    @unique @db.VarChar(255)
+  name        String?   @db.VarChar(255)
+  otp         String?   @db.VarChar(10)
+  otpExpiry   DateTime? @map("otp_expiry")
+  authToken   String?   @unique @map("auth_token") @db.VarChar(64)
+  tokenExpiry DateTime? @map("token_expiry")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  lastLoginAt DateTime? @map("last_login_at")
+
+  @@map("users")
+}

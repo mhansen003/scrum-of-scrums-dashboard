@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Scrum of Scrums</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0f1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2234;
+      --accent-blue: #3b82f6;
+      --accent-teal: #14b8a6;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(255,255,255,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(20, 184, 166, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .login-container {
+      position: relative;
+      z-index: 1;
+      max-width: 450px;
+      width: 100%;
+    }
+
+    .login-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .logo {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent-teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent-teal);
+      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+    }
+
+    .otp-input {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.5rem;
+      text-align: center;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.875rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--accent-teal);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #0d9488;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      border-color: var(--accent-blue);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .error-message {
+      margin-top: 0.5rem;
+      padding: 0.75rem;
+      background: rgba(244, 63, 94, 0.1);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      border-radius: 6px;
+      color: #f43f5e;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .success-message {
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      background: rgba(20, 184, 166, 0.1);
+      border: 1px solid rgba(20, 184, 166, 0.3);
+      border-radius: 6px;
+      color: var(--accent-teal);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: var(--accent-teal);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo">🔐</div>
+        <h1>Admin Login</h1>
+        <p class="subtitle">CMG Financial Employees Only</p>
+      </div>
+
+      <!-- Step 1: Email Input -->
+      <div id="emailStep" class="step active">
+        <form id="emailForm">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="your.name@cmgfi.com" required autocomplete="email">
+            <div id="emailError" class="error-message"></div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="sendOtpBtn">
+            <span id="sendOtpText">Send Verification Code</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Step 2: OTP Verification -->
+      <div id="otpStep" class="step">
+        <div class="success-message">
+          📧 Verification code sent to your email
+        </div>
+        <form id="otpForm">
+          <div class="form-group">
+            <label for="otp">Verification Code</label>
+            <input type="text" id="otp" class="otp-input" placeholder="000000" maxlength="6" pattern="[0-9]{6}" required autocomplete="one-time-code">
+            <div id="otpError" class="error-message"></div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="verifyOtpBtn">
+            <span id="verifyOtpText">Verify & Continue</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="backBtn" style="margin-top: 0.75rem;">
+            ← Back to Email
+          </button>
+        </form>
+      </div>
+
+      <a href="../../index.html" class="back-link">← Back to Dashboard</a>
+    </div>
+  </div>
+
+  <script>
+    let userEmail = '';
+
+    // Check if already authenticated
+    const authToken = localStorage.getItem('scrumAuthToken');
+    if (authToken) {
+      validateAndRedirect(authToken);
+    }
+
+    async function validateAndRedirect(token) {
+      try {
+        const response = await fetch('/api/auth/validate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ authToken: token })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          window.location.href = './index.html';
+        } else {
+          localStorage.removeItem('scrumAuthToken');
+        }
+      } catch (error) {
+        console.error('Validation error:', error);
+        localStorage.removeItem('scrumAuthToken');
+      }
+    }
+
+    // Email form submission
+    document.getElementById('emailForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      userEmail = document.getElementById('email').value.trim().toLowerCase();
+      const sendOtpBtn = document.getElementById('sendOtpBtn');
+      const emailError = document.getElementById('emailError');
+
+      emailError.classList.remove('show');
+
+      // Disable button and show loading
+      sendOtpBtn.disabled = true;
+      document.getElementById('sendOtpText').innerHTML = 'Sending... <span class="loading-spinner"></span>';
+
+      try {
+        const response = await fetch('/api/auth/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: userEmail })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Switch to OTP step
+          document.getElementById('emailStep').classList.remove('active');
+          document.getElementById('otpStep').classList.add('active');
+          setTimeout(() => document.getElementById('otp').focus(), 300);
+        } else {
+          emailError.textContent = data.error || 'Failed to send verification code';
+          emailError.classList.add('show');
+        }
+      } catch (error) {
+        console.error('Send OTP error:', error);
+        emailError.textContent = 'Connection error. Please try again.';
+        emailError.classList.add('show');
+      } finally {
+        sendOtpBtn.disabled = false;
+        document.getElementById('sendOtpText').textContent = 'Send Verification Code';
+      }
+    });
+
+    // OTP form submission
+    document.getElementById('otpForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const otp = document.getElementById('otp').value.trim();
+      const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+      const otpError = document.getElementById('otpError');
+
+      if (otp.length !== 6) {
+        otpError.textContent = 'Please enter a 6-digit code';
+        otpError.classList.add('show');
+        return;
+      }
+
+      otpError.classList.remove('show');
+
+      // Disable button and show loading
+      verifyOtpBtn.disabled = true;
+      document.getElementById('verifyOtpText').innerHTML = 'Verifying... <span class="loading-spinner"></span>';
+
+      try {
+        const response = await fetch('/api/auth/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: userEmail, otp: otp })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Store auth token
+          localStorage.setItem('scrumAuthToken', data.authToken);
+
+          // Redirect to admin dashboard
+          window.location.href = './index.html';
+        } else {
+          otpError.textContent = data.error || 'Invalid verification code';
+          otpError.classList.add('show');
+        }
+      } catch (error) {
+        console.error('Verify OTP error:', error);
+        otpError.textContent = 'Connection error. Please try again.';
+        otpError.classList.add('show');
+      } finally {
+        verifyOtpBtn.disabled = false;
+        document.getElementById('verifyOtpText').textContent = 'Verify & Continue';
+      }
+    });
+
+    // Back button
+    document.getElementById('backBtn').addEventListener('click', () => {
+      document.getElementById('otpStep').classList.remove('active');
+      document.getElementById('emailStep').classList.add('active');
+      document.getElementById('otp').value = '';
+      document.getElementById('otpError').classList.remove('show');
+    });
+
+    // Auto-focus and formatting for OTP input
+    document.getElementById('otp').addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, '');
+    });
+  </script>
+</body>
+</html>
