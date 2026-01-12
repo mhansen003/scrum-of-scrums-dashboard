@@ -564,7 +564,7 @@
           return {
             date: dateStr,
             title: formattedDate,
-            url: `./weeks/${dateStr}.html`,
+            url: `./pages/report.html?date=${dateStr}`,
             teams: report.teamCount,
             stats: report.stats
           };
@@ -614,7 +614,7 @@
         const showFullStats = index < 4;
 
         return `
-          <a href="./weeks/${dateStr}.html" class="report-tile" style="--i: ${index + 1}">
+          <a href="./pages/report.html?date=${dateStr}" class="report-tile" style="--i: ${index + 1}">
             <div class="report-date">Period Ending</div>
             <h2 class="report-title">${formattedDate}</h2>
             <p class="report-meta">${metaText}</p>
