@@ -48,7 +48,7 @@
       height: 100%;
       display: none;
       flex-direction: column;
-      padding: 160px 80px 60px 80px;
+      padding: 220px 80px 60px 80px;
       background: var(--bg-primary);
       opacity: 0;
       transition: opacity 0.4s ease;
@@ -160,6 +160,165 @@
       background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
       border-color: transparent;
       color: white;
+    }
+
+
+    /* AI Chat Search */
+    .chat-search {
+      position: fixed;
+      top: 145px;
+      left: 40px;
+      right: 40px;
+      z-index: 140;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .chat-search-icon {
+      width: 20px;
+      height: 20px;
+      fill: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .chat-search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .chat-search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .chat-search-btn {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.25rem;
+      color: white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .chat-search-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+
+    .chat-search-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .ai-badge-chat {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .chat-results {
+      position: fixed;
+      top: 215px;
+      left: 40px;
+      right: 40px;
+      bottom: 80px;
+      z-index: 130;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .chat-results.show {
+      display: block;
+    }
+
+    .chat-message {
+      margin-bottom: 1.5rem;
+    }
+
+    .chat-message-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .chat-message-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .chat-message.user .chat-message-content {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(20, 184, 166, 0.15));
+      border-color: var(--accent-teal);
+    }
+
+    .chat-loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+    }
+
+    .chat-spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border-subtle);
+      border-top-color: var(--accent-teal);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .chat-close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chat-close-btn:hover {
+      border-color: var(--accent-rose);
+      color: var(--accent-rose);
     }
 
     h1 {
@@ -421,8 +580,35 @@
         font-size: 0.75rem;
       }
 
+      
+      .chat-search {
+        top: 110px;
+        left: 15px;
+        right: 15px;
+        padding: 0.6rem 0.75rem;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .chat-search-input {
+        font-size: 0.9rem;
+      }
+
+      .chat-search-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.6rem 1rem;
+      }
+
+      .chat-results {
+        top: 200px;
+        left: 15px;
+        right: 15px;
+        padding: 1rem;
+      }
+
       .slide {
-        padding: 120px 20px 80px 20px;
+        padding: 210px 20px 80px 20px;
       }
 
       h1 {
@@ -528,8 +714,26 @@
         font-size: 0.7rem;
       }
 
+      
+      .chat-search {
+        padding: 0.5rem 0.6rem;
+      }
+
+      .chat-search-input {
+        font-size: 0.85rem;
+      }
+
+      .chat-search-btn {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.85rem;
+      }
+
+      .chat-results {
+        padding: 0.85rem;
+      }
+
       .slide {
-        padding: 110px 15px 70px 15px;
+        padding: 200px 15px 70px 15px;
       }
 
       h1 {
@@ -585,7 +789,7 @@
 <body>
   <a href="../index.html" class="back-link">← Back to Dashboard</a>
 
-  <div class="team-tabs">
+  <div class="team-tabs" id="teamTabs">
     <div class="team-tab active" onclick="goToSlide(0)">Lisa Origination</div>
     <div class="team-tab" onclick="goToSlide(1)">Arches & Zion</div>
     <div class="team-tab" onclick="goToSlide(2)">Badlands</div>
@@ -1263,6 +1467,146 @@
       updateSlide();
     }
 
+
+  
+    // AI Chat Functions
+    function handleChatKeypress(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        performChat();
+      }
+    }
+
+    function getReportContext() {
+      const allSlides = document.querySelectorAll('.slide');
+      let context = 'REPORT PERIOD ENDING: September 29, 2025\n\n';
+
+      allSlides.forEach((slide, index) => {
+        const teamName = slide.querySelector('h2')?.textContent || `Slide ${index + 1}`;
+        const content = slide.textContent
+          .replace(/\s+/g, ' ')
+          .trim();
+        context += `\n\n=== ${teamName} ===\n${content}\n`;
+      });
+
+      return context;
+    }
+
+    async function performChat() {
+      const chatInput = document.getElementById('chatInput');
+      const chatBtn = document.getElementById('chatBtn');
+      const chatResults = document.getElementById('chatResults');
+      const chatMessages = document.getElementById('chatMessages');
+
+      const question = chatInput.value.trim();
+      if (!question) return;
+
+      // Disable input
+      chatBtn.disabled = true;
+      chatInput.disabled = true;
+
+      // Show chat results panel
+      chatResults.classList.add('show');
+
+      // Add user message
+      chatMessages.innerHTML += `
+        <div class="chat-message user">
+          <div class="chat-message-label">You asked</div>
+          <div class="chat-message-content">${escapeHtml(question)}</div>
+        </div>
+      `;
+
+      // Add loading indicator
+      chatMessages.innerHTML += `
+        <div class="chat-message" id="loadingMsg">
+          <div class="chat-message-label">AI is thinking</div>
+          <div class="chat-loading">
+            <div class="chat-spinner"></div>
+            <p>Analyzing report...</p>
+          </div>
+        </div>
+      `;
+
+      // Scroll to bottom
+      chatResults.scrollTop = chatResults.scrollHeight;
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'anthropic/claude-sonnet-4.5',
+            messages: [
+              {
+                role: 'system',
+                content: `You are an AI assistant helping users understand a Scrum of Scrums report. Here is the report data:\n\n${getReportContext()}\n\nAnswer questions about the teams, their accomplishments, goals, blockers, and risks. Be concise and helpful. Format your response in markdown.`
+              },
+              {
+                role: 'user',
+                content: question
+              }
+            ]
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`API request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const aiResponse = data.choices[0].message.content;
+
+        // Remove loading indicator
+        document.getElementById('loadingMsg')?.remove();
+
+        // Add AI response
+        chatMessages.innerHTML += `
+          <div class="chat-message">
+            <div class="chat-message-label">AI Response</div>
+            <div class="chat-message-content">${formatMarkdown(aiResponse)}</div>
+          </div>
+        `;
+
+        // Clear input
+        chatInput.value = '';
+
+      } catch (error) {
+        document.getElementById('loadingMsg')?.remove();
+        chatMessages.innerHTML += `
+          <div class="chat-message">
+            <div class="chat-message-label">Error</div>
+            <div class="chat-message-content" style="color: var(--accent-rose);">
+              Failed to get response: ${error.message}
+            </div>
+          </div>
+        `;
+      } finally {
+        chatBtn.disabled = false;
+        chatInput.disabled = false;
+        chatResults.scrollTop = chatResults.scrollHeight;
+      }
+    }
+
+    function closeChat() {
+      document.getElementById('chatResults').classList.remove('show');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function formatMarkdown(text) {
+      // Simple markdown formatting
+      return text
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/\n- /g, '\n• ')
+        .replace(/\n/g, '<br>');
+    }
 
   </script>
 </body>
