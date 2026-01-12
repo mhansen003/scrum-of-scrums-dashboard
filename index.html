@@ -99,6 +99,30 @@
     header {
       text-align: center;
       margin-bottom: 60px;
+      position: relative;
+    }
+
+    .admin-link {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0.75rem 1.5rem;
+      background: var(--accent-teal);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .admin-link:hover {
+      background: #0d9488;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
     }
 
     h1 {
@@ -501,6 +525,9 @@
 
   <div class="container">
     <header>
+      <a href="./pages/admin/index.html" class="admin-link">
+        📊 Admin Dashboard
+      </a>
       <div class="label">CMG Financial</div>
       <h1>Scrum of Scrums</h1>
       <p class="subtitle">Weekly Team Updates & Progress Reports</p>
