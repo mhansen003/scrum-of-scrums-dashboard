@@ -3,9 +3,21 @@
   "version": "1.0.0",
   "description": "Scrum of Scrums Dashboard with AI-powered search and chat",
   "type": "module",
-  "dependencies": {},
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.6",
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.6.3"
+  },
   "scripts": {
     "dev": "echo 'Deploy to Vercel for testing'",
-    "build": "echo 'No build step required'"
+    "build": "npx prisma generate",
+    "migrate": "tsx scripts/migrate-html.ts",
+    "validate": "tsx scripts/validate-data.ts"
   }
 }

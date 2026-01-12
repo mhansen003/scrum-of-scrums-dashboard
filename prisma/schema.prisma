@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Report {
+  id            Int           @id @default(autoincrement())
+  periodEndDate DateTime      @unique @map("period_end_date") @db.Date
+  title         String        @db.VarChar(255)
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @default(now()) @updatedAt @map("updated_at")
+  published     Boolean       @default(false)
+
+  reportTeams   ReportTeam[]
+
+  @@map("reports")
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(255)
+  slug      String   @unique @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  reportTeams ReportTeam[]
+
+  @@map("teams")
+}
+
+model TeamLead {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(255)
+  email     String?  @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  reportTeams ReportTeam[]
+
+  @@map("team_leads")
+}
+
+model ReportTeam {
+  id           Int      @id @default(autoincrement())
+  reportId     Int      @map("report_id")
+  teamId       Int      @map("team_id")
+  teamLeadId   Int      @map("team_lead_id")
+  displayOrder Int      @default(0) @map("display_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  report          Report           @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  team            Team             @relation(fields: [teamId], references: [id])
+  teamLead        TeamLead         @relation(fields: [teamLeadId], references: [id])
+  accomplishments Accomplishment[]
+  goals           Goal[]
+  blockers        Blocker[]
+  risks           Risk[]
+
+  @@unique([reportId, teamId])
+  @@index([reportId])
+  @@index([teamId])
+  @@map("report_teams")
+}
+
+model Accomplishment {
+  id           Int      @id @default(autoincrement())
+  reportTeamId Int      @map("report_team_id")
+  sectionName  String   @map("section_name") @db.VarChar(255)
+  description  String   @db.Text
+  ticketId     String?  @map("ticket_id") @db.VarChar(50)
+  ticketUrl    String?  @map("ticket_url") @db.Text
+  displayOrder Int      @default(0) @map("display_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  reportTeam ReportTeam @relation(fields: [reportTeamId], references: [id], onDelete: Cascade)
+
+  @@index([reportTeamId])
+  @@map("accomplishments")
+}
+
+model Goal {
+  id           Int      @id @default(autoincrement())
+  reportTeamId Int      @map("report_team_id")
+  sectionName  String   @map("section_name") @db.VarChar(255)
+  description  String   @db.Text
+  ticketId     String?  @map("ticket_id") @db.VarChar(50)
+  ticketUrl    String?  @map("ticket_url") @db.Text
+  displayOrder Int      @default(0) @map("display_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  reportTeam ReportTeam @relation(fields: [reportTeamId], references: [id], onDelete: Cascade)
+
+  @@index([reportTeamId])
+  @@map("goals")
+}
+
+model Blocker {
+  id           Int      @id @default(autoincrement())
+  reportTeamId Int      @map("report_team_id")
+  description  String   @db.Text
+  ticketId     String?  @map("ticket_id") @db.VarChar(50)
+  ticketUrl    String?  @map("ticket_url") @db.Text
+  workaround   String?  @db.Text
+  displayOrder Int      @default(0) @map("display_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  reportTeam ReportTeam @relation(fields: [reportTeamId], references: [id], onDelete: Cascade)
+
+  @@index([reportTeamId])
+  @@map("blockers")
+}
+
+model Risk {
+  id           Int      @id @default(autoincrement())
+  reportTeamId Int      @map("report_team_id")
+  description  String   @db.Text
+  mitigation   String?  @db.Text
+  severity     String   @default("medium") @db.VarChar(50)
+  displayOrder Int      @default(0) @map("display_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  reportTeam ReportTeam @relation(fields: [reportTeamId], references: [id], onDelete: Cascade)
+
+  @@index([reportTeamId])
+  @@map("risks")
+}
