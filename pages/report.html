@@ -169,16 +169,26 @@
       color: var(--text-secondary);
     }
 
+    /* 4-Blocker Grid Layout */
+    .four-blocker-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
     .section {
-      margin-bottom: 2.5rem;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
       padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 400px;
     }
 
     .section-title {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 700;
       margin-bottom: 1.5rem;
       display: flex;
@@ -186,12 +196,37 @@
       gap: 0.75rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
     }
 
     .section-title.accomplishments { color: var(--accent-blue); }
     .section-title.goals { color: var(--accent-teal); }
     .section-title.blockers { color: var(--accent-amber); }
     .section-title.risks { color: var(--accent-rose); }
+
+    .section-content {
+      flex: 1;
+      overflow-y: auto;
+      max-height: 500px;
+    }
+
+    .section-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .section-content::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+      border-radius: 3px;
+    }
+
+    .section-content::-webkit-scrollbar-thumb {
+      background: var(--border-subtle);
+      border-radius: 3px;
+    }
+
+    .section-content::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-teal);
+    }
 
     .subsection {
       margin-bottom: 1.5rem;
@@ -327,12 +362,23 @@
         font-size: 0.85rem;
       }
 
+      /* Stack 4-blocker vertically on mobile */
+      .four-blocker-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
       .section {
         padding: 1.5rem;
+        min-height: 300px;
       }
 
       .section-title {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+      }
+
+      .section-content {
+        max-height: 400px;
       }
     }
   </style>
@@ -456,36 +502,47 @@
               <div class="team-lead">Team Lead: ${lead.name}</div>
             </div>
 
-            <!-- Accomplishments -->
-            <div class="section">
-              <div class="section-title accomplishments">
-                ✓ Accomplishments Last Period
+            <!-- 4-Blocker Grid -->
+            <div class="four-blocker-grid">
+              <!-- Top Left: Accomplishments -->
+              <div class="section">
+                <div class="section-title accomplishments">
+                  ✓ Accomplishments Last Period
+                </div>
+                <div class="section-content">
+                  ${renderGroupedItems(reportTeam.accomplishments)}
+                </div>
               </div>
-              ${renderGroupedItems(reportTeam.accomplishments)}
-            </div>
 
-            <!-- Goals -->
-            <div class="section">
-              <div class="section-title goals">
-                🎯 Goals This Period
+              <!-- Top Right: Goals -->
+              <div class="section">
+                <div class="section-title goals">
+                  🎯 Goals This Period
+                </div>
+                <div class="section-content">
+                  ${renderGroupedItems(reportTeam.goals)}
+                </div>
               </div>
-              ${renderGroupedItems(reportTeam.goals)}
-            </div>
 
-            <!-- Blockers -->
-            <div class="section">
-              <div class="section-title blockers">
-                🚧 Blockers and Work Arounds
+              <!-- Bottom Left: Blockers -->
+              <div class="section">
+                <div class="section-title blockers">
+                  🚧 Blockers and Work Arounds
+                </div>
+                <div class="section-content">
+                  ${renderSimpleItems(reportTeam.blockers)}
+                </div>
               </div>
-              ${renderSimpleItems(reportTeam.blockers)}
-            </div>
 
-            <!-- Risks -->
-            <div class="section">
-              <div class="section-title risks">
-                ⚠️ Critical Risks and Mitigations
+              <!-- Bottom Right: Risks -->
+              <div class="section">
+                <div class="section-title risks">
+                  ⚠️ Critical Risks and Mitigations
+                </div>
+                <div class="section-content">
+                  ${renderSimpleItems(reportTeam.risks)}
+                </div>
               </div>
-              ${renderSimpleItems(reportTeam.risks)}
             </div>
           </div>
         `;
