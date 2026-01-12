@@ -329,12 +329,6 @@
       transform: translateY(-2px);
     }
 
-    .nav-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-      transform: none;
-    }
-
     .progress {
       color: var(--text-secondary);
       font-size: 0.95rem;
@@ -628,14 +622,8 @@
         slide.classList.toggle('active', i === index);
       });
 
-      // Update navigation buttons
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
+      // Update progress indicator
       const progress = document.getElementById('progress');
-
-      prevBtn.disabled = index === 0;
-      nextBtn.disabled = index === reportData.reportTeams.length - 1;
-
       progress.textContent = `Team ${index + 1} of ${reportData.reportTeams.length}`;
 
       // Scroll to top
@@ -643,15 +631,19 @@
     }
 
     function previousTeam() {
-      if (currentTeamIndex > 0) {
-        showTeam(currentTeamIndex - 1);
-      }
+      // Wrap around to last team if at first team
+      const newIndex = currentTeamIndex > 0
+        ? currentTeamIndex - 1
+        : reportData.reportTeams.length - 1;
+      showTeam(newIndex);
     }
 
     function nextTeam() {
-      if (currentTeamIndex < reportData.reportTeams.length - 1) {
-        showTeam(currentTeamIndex + 1);
-      }
+      // Wrap around to first team if at last team
+      const newIndex = currentTeamIndex < reportData.reportTeams.length - 1
+        ? currentTeamIndex + 1
+        : 0;
+      showTeam(newIndex);
     }
 
     // Keyboard navigation
